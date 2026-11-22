@@ -1,0 +1,187 @@
+---
+import AcademicSEO from '../components/AcademicSEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: 'ar' | 'en' | 'fr';
+  citationTitle?: string;
+  citationDate?: string | number;
+  citationJournal?: string;
+  citationPdfUrl?: string;
+}
+
+const {
+  title,
+  description,
+  lang = 'ar',
+  citationTitle,
+  citationDate,
+  citationJournal,
+  citationPdfUrl,
+} = Astro.props;
+
+const isRtl = lang === 'ar';
+---
+
+<!doctype html>
+<html lang={lang} dir={isRtl ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google Fonts: Cairo & Amiri for Arabic, Inter for Latin -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <AcademicSEO
+      title={title}
+      description={description}
+      lang={lang}
+      citationTitle={citationTitle}
+      citationDate={citationDate}
+      citationJournal={citationJournal}
+      citationPdfUrl={citationPdfUrl}
+    />
+
+    <style is:global>
+      :root {
+        --color-primary: #1b365d; /* Academic deep navy */
+        --color-secondary: #8b263e; /* Academic burgundy / crimson */
+        --color-gold: #c29b38; /* Algerian Sahara golden accent */
+        --color-bg: #f8fafc;
+        --color-surface: #ffffff;
+        --color-text: #1e293b;
+        --color-text-muted: #64748b;
+        --color-border: #e2e8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: -apple-system, BlinkMacSystemFont, "Cairo", "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* RTL Arabic Typography Enhancement */
+      html[dir="rtl"] body {
+        font-family: "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      
+      html[dir="ltr"] body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      h1, h2, h3, h4 {
+        color: var(--color-primary);
+        line-height: 1.3;
+      }
+
+      a {
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      a:hover {
+        color: var(--color-secondary);
+      }
+
+      .container {
+        max-width: 1150px;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+        width: 100%;
+      }
+
+      main {
+        flex: 1;
+        padding: 2.5rem 0;
+      }
+
+      .card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 4px;
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      .badge-primary {
+        background: #e0e7ff;
+        color: #3730a3;
+      }
+
+      .badge-gold {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 0.9rem;
+        border: 1px solid transparent;
+      }
+
+      .btn-primary {
+        background-color: var(--color-primary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #12243e;
+        color: white;
+      }
+
+      .btn-outline {
+        border-color: var(--color-border);
+        background: white;
+        color: var(--color-text);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <Header currentLang={lang} />
+    <main>
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+    <Footer currentLang={lang} />
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "abboutahar-academic-website",
+  "version": "1.0.0",
+  "description": "Personal Academic Website for Prof. Dr. Tahar Abbou - University of Adrar, Algeria",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.15.0"
+  }
+}

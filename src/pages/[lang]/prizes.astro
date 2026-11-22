@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'ar' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const prizes = await getCollection('prizes');
+
+const pageTitles = {
+  ar: "الجوائز والتكريمات العلمية",
+  en: "Academic Prizes & Honors",
+  fr: "Prix & Distinctions Académiques",
+};
+---
+
+<Layout title={pageTitles[lang as 'ar' | 'en' | 'fr']} lang={lang as 'ar' | 'en' | 'fr'}>
+  <div class="page-header">
+    <h1 class="page-title">{pageTitles[lang as 'ar' | 'en' | 'fr']}</h1>
+    <p class="page-sub">
+      {lang === 'ar' && "شهادات التقدير، الأوسمة، والجوائز العلمية الممنوحة من الهيئات والجامعات."}
+      {lang === 'en' && "Honors, excellence certificates, and academic distinctions awarded by institutions."}
+      {lang === 'fr' && "Distinctions, prix d'excellence et certificats décernés par les universités."}
+    </p>
+  </div>
+
+  <div class="prizes-grid">
+    {prizes.map((p) => (
+      <div class="card prize-card">
+        <span class="badge badge-gold">{p.data.year}</span>
+        <h3 class="prize-title">{p.data.title}</h3>
+        <p class="prize-inst">🏛️ {p.data.institution}</p>
+        {p.body && <p class="prize-desc">{p.body}</p>}
+        {p.data.image && (
+          <img src={p.data.image} alt={p.data.title} class="prize-img" />
+        )}
+      </div>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 1rem;
+  }
+  .page-title {
+    font-size: 1.85rem;
+    color: var(--color-primary);
+  }
+  .page-sub {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+  }
+  .prize-title {
+    font-size: 1.25rem;
+    margin: 0.5rem 0 0.25rem;
+    color: var(--color-primary);
+  }
+  .prize-inst {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+  }
+  .prize-desc {
+    font-size: 0.9rem;
+    color: #475569;
+  }
+  .prize-img {
+    margin-top: 1rem;
+    max-width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+  }
+</style>

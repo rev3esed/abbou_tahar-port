@@ -1,0 +1,115 @@
+---
+export interface Props {
+  currentLang: 'ar' | 'en' | 'fr';
+}
+
+const { currentLang } = Astro.props;
+
+const footerText = {
+  ar: {
+    affiliation: "جامعة أحمد دراية - أدرار، الجزائر | مخبر المخطوطات الجزائرية في إفريقيا",
+    office: "كلية الآداب واللغات / مركز التعليم المكثف للغات (CEIL)",
+    adminLink: "إدارة المحتوى (تسجيل الدخول)",
+    rights: "جميع الحقوق محفوظة © " + new Date().getFullYear() + " أ.د. الطاهر عبو",
+  },
+  en: {
+    affiliation: "Ahmed Draia University of Adrar, Algeria | Laboratory of Algerian Manuscripts in Africa",
+    office: "Faculty of Letters and Languages / Intensive Language Center (CEIL)",
+    adminLink: "Admin Dashboard (Login)",
+    rights: "All rights reserved © " + new Date().getFullYear() + " Prof. Dr. Tahar Abbou",
+  },
+  fr: {
+    affiliation: "Université Ahmed Draia d'Adrar, Algérie | Laboratoire des Manuscrits Algériens en Afrique",
+    office: "Faculté des Lettres et des Langues / Centre d'Enseignement Intensif des Langues (CEIL)",
+    adminLink: "Espace Administration (Connexion)",
+    rights: "Tous droits réservés © " + new Date().getFullYear() + " Pr. Tahar Abbou",
+  },
+};
+
+const t = footerText[currentLang];
+---
+
+<footer class="site-footer">
+  <div class="container footer-content">
+    <div class="footer-info">
+      <p class="affiliation">{t.affiliation}</p>
+      <p class="office">{t.office}</p>
+    </div>
+    
+    <div class="footer-meta">
+      <p>{t.rights}</p>
+      <a href="/admin/" class="admin-badge" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        {t.adminLink}
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 2rem 0;
+    margin-top: auto;
+    font-size: 0.85rem;
+    border-top: 3px solid var(--color-gold);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .affiliation {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  .office {
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+  }
+
+  .footer-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+  }
+
+  .admin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #94a3b8;
+    background: #1e293b;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+  }
+
+  .admin-badge:hover {
+    color: #f8fafc;
+    background: #334155;
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+    .footer-meta {
+      align-items: center;
+    }
+  }
+</style>

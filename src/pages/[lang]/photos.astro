@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'ar' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const photos = await getCollection('photos');
+
+const pageTitles = {
+  ar: "معرض الصور والأرشيف الأكاديمي",
+  en: "Photo Gallery & Fieldwork",
+  fr: "Galerie Photos & Terrain",
+};
+---
+
+<Layout title={pageTitles[lang as 'ar' | 'en' | 'fr']} lang={lang as 'ar' | 'en' | 'fr'}>
+  <div class="page-header">
+    <h1 class="page-title">{pageTitles[lang as 'ar' | 'en' | 'fr']}</h1>
+    <p class="page-sub">
+      {lang === 'ar' && "توثيق بالصور للملتقيات الدولية، العمل الميداني، ومناقشات أطروحات الدكتوراه."}
+      {lang === 'en' && "Photographic documentation of international conferences, fieldwork, and defenses."}
+      {lang === 'fr' && "Documentation photographique des colloques internationaux, du terrain et des soutenances."}
+    </p>
+  </div>
+
+  <div class="gallery-grid">
+    {photos.map((ph) => (
+      <div class="card photo-card">
+        <img src={ph.data.photo} alt={ph.data.title} class="gallery-image" loading="lazy" />
+        <div class="photo-info">
+          <h4 class="photo-title">{ph.data.title}</h4>
+          <p class="photo-event">{ph.data.event}</p>
+          {ph.data.date && <span class="photo-date">{ph.data.date}</span>}
+        </div>
+      </div>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 1rem;
+  }
+  .page-title {
+    font-size: 1.85rem;
+    color: var(--color-primary);
+  }
+  .page-sub {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .photo-card {
+    padding: 0;
+    overflow: hidden;
+  }
+  .gallery-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-info {
+    padding: 1rem;
+  }
+  .photo-title {
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+  .photo-event {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .photo-date {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+</style>

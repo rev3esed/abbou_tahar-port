@@ -1,0 +1,298 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PublicationCard from '../../components/PublicationCard.astro';
+import { getCollection } from 'astro:content';
+import aboutData from '../../content/profile/about.json';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'ar' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const isArabic = lang === 'ar';
+
+// Fetch featured publications
+const allPublications = await getCollection('publications');
+const featuredPubs = allPublications
+  .filter(p => p.data.lang === lang || (lang === 'ar' && p.data.lang === 'ar'))
+  .slice(0, 3);
+
+// Fetch recent announcements
+const allAnnouncements = await getCollection('announcements');
+const recentAnnouncements = allAnnouncements
+  .filter(a => a.data.lang === lang || lang === 'ar')
+  .slice(0, 3);
+
+const labels = {
+  ar: {
+    heroTitle: aboutData.name_ar,
+    heroSub: aboutData.title_ar,
+    bio: aboutData.bio_ar,
+    contactMe: "معلومات التواصل والانتساب",
+    featuredPubs: "أبرز المنشورات والأبحاث الحديثة",
+    viewAllPubs: "عرض جميع المنشورات العلمية ←",
+    announcements: "الإعلانات والمستجدات الأكاديمية",
+    viewAllAnnouncements: "عرض كل الإعلانات",
+    cvDownload: "تحميل السيرة الذاتية (CV PDF)",
+    scholar: "Google Scholar",
+    orcid: "ORCID ID",
+    researchgate: "ResearchGate",
+    email: "البريد الإلكتروني:",
+    office: "المكتب:",
+  },
+  en: {
+    heroTitle: aboutData.name_en,
+    heroSub: aboutData.title_en,
+    bio: aboutData.bio_en,
+    contactMe: "Affiliation & Contact",
+    featuredPubs: "Featured & Recent Publications",
+    viewAllPubs: "View all publications →",
+    announcements: "Announcements & News",
+    viewAllAnnouncements: "View all announcements",
+    cvDownload: "Download Curriculum Vitae (PDF)",
+    scholar: "Google Scholar",
+    orcid: "ORCID ID",
+    researchgate: "ResearchGate",
+    email: "Email:",
+    office: "Office:",
+  },
+  fr: {
+    heroTitle: aboutData.name_fr,
+    heroSub: aboutData.title_fr,
+    bio: aboutData.bio_fr,
+    contactMe: "Affiliation & Contact",
+    featuredPubs: "Publications récentes et sélectionnées",
+    viewAllPubs: "Voir toutes les publications →",
+    announcements: "Annonces et actualités",
+    viewAllAnnouncements: "Toutes les annonces",
+    cvDownload: "Télécharger le CV (PDF)",
+    scholar: "Google Scholar",
+    orcid: "ORCID ID",
+    researchgate: "ResearchGate",
+    email: "Courriel :",
+    office: "Bureau :",
+  },
+};
+
+const t = labels[lang as 'ar' | 'en' | 'fr'];
+---
+
+<Layout title={t.heroTitle} lang={lang as 'ar' | 'en' | 'fr'}>
+  <!-- Hero / Bio Section -->
+  <section class="hero-section card">
+    <div class="hero-layout">
+      <div class="hero-text">
+        <h1 class="hero-name">{t.heroTitle}</h1>
+        <p class="hero-role">{t.heroSub}</p>
+        <p class="hero-bio">{t.bio}</p>
+
+        <div class="hero-links">
+          {aboutData.scholar_url && (
+            <a href={aboutData.scholar_url} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              🎓 {t.scholar}
+            </a>
+          )}
+          {aboutData.researchgate_url && (
+            <a href={aboutData.researchgate_url} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              🔬 {t.researchgate}
+            </a>
+          )}
+          {aboutData.orcid_url && (
+            <a href={aboutData.orcid_url} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              🆔 {t.orcid}
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="hero-aside">
+        <div class="contact-box">
+          <h3>{t.contactMe}</h3>
+          <p><strong>{t.email}</strong> <a href={`mailto:${aboutData.email}`}>{aboutData.email}</a></p>
+          <p><strong>{t.office}</strong> {aboutData.office}</p>
+          <hr class="contact-divider" />
+          <a href="/uploads/cv-tahar-abbou.pdf" class="btn btn-outline btn-full" download>
+            📄 {t.cvDownload}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcements -->
+  {recentAnnouncements.length > 0 && (
+    <section class="section-block">
+      <h2 class="section-title">📢 {t.announcements}</h2>
+      <div class="announcements-grid">
+        {recentAnnouncements.map((item) => (
+          <div class="card announcement-item">
+            <span class="badge badge-gold">{item.data.date}</span>
+            <h3 class="announcement-title">{item.data.title}</h3>
+            <p class="announcement-excerpt">{item.body.substring(0, 160)}...</p>
+            {item.data.attachment && (
+              <a href={item.data.attachment} class="attachment-link" target="_blank" download>
+                📎 تحميل المرفق
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Featured Publications -->
+  <section class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">📚 {t.featuredPubs}</h2>
+      <a href={`/${lang}/publications`} class="view-all-link">{t.viewAllPubs}</a>
+    </div>
+
+    <div class="pub-list">
+      {featuredPubs.map((pub) => (
+        <PublicationCard
+          title={pub.data.title}
+          authors={pub.data.authors}
+          journal={pub.data.journal}
+          year={pub.data.year}
+          type={pub.data.type}
+          volumePages={pub.data.volume_pages}
+          doiUrl={pub.data.doi_url}
+          pdfFile={pub.data.pdf_file}
+          abstract={pub.body}
+          lang={lang as 'ar' | 'en' | 'fr'}
+        />
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero-section {
+    padding: 2rem;
+    border-top: 5px solid var(--color-primary);
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .hero-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .hero-role {
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-bio {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #334155;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .contact-box {
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .contact-box h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .contact-box p {
+    margin-bottom: 0.5rem;
+    word-break: break-all;
+  }
+
+  .contact-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 1rem 0;
+  }
+
+  .btn-full {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .section-block {
+    margin-top: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+  }
+
+  .view-all-link {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .announcements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .announcement-item {
+    padding: 1.25rem;
+  }
+
+  .announcement-title {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+
+  .announcement-excerpt {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .attachment-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+  }
+
+  @media (max-width: 850px) {
+    .hero-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

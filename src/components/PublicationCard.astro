@@ -1,0 +1,178 @@
+---
+export interface Props {
+  title: string;
+  authors: string;
+  journal: string;
+  year: number;
+  type: string;
+  volumePages?: string;
+  doiUrl?: string;
+  pdfFile?: string;
+  abstract?: string;
+  lang: 'ar' | 'en' | 'fr';
+}
+
+const {
+  title,
+  authors,
+  journal,
+  year,
+  type,
+  volumePages,
+  doiUrl,
+  pdfFile,
+  abstract,
+  lang,
+} = Astro.props;
+
+const labels = {
+  ar: {
+    downloadPdf: "تحميل البحث (PDF)",
+    viewDoi: "رابط DOI / الناشر",
+    showAbstract: "عرض الملخص",
+    journal: "مقال محكّم",
+    chapter: "فصل في كتاب",
+    book: "كتاب مؤلف",
+    proceeding: "مداخلة ملتقى",
+  },
+  en: {
+    downloadPdf: "Download PDF",
+    viewDoi: "View DOI / Publisher",
+    showAbstract: "View Abstract",
+    journal: "Journal Article",
+    chapter: "Book Chapter",
+    book: "Book",
+    proceeding: "Conference Paper",
+  },
+  fr: {
+    downloadPdf: "Télécharger PDF",
+    viewDoi: "Consulter DOI / Éditeur",
+    showAbstract: "Voir le résumé",
+    journal: "Article de revue",
+    chapter: "Chapitre d'ouvrage",
+    book: "Ouvrage",
+    proceeding: "Actes de colloque",
+  },
+};
+
+const t = labels[lang];
+const typeLabel = (labels[lang] as any)[type] || type;
+---
+
+<article class="card pub-card">
+  <div class="pub-type-badge">
+    <span class="badge badge-primary">{typeLabel}</span>
+    <span class="pub-year">{year}</span>
+  </div>
+
+  <h3 class="pub-title">{title}</h3>
+  
+  <p class="pub-authors">{authors}</p>
+  
+  <p class="pub-citation">
+    <em>{journal}</em>{volumePages ? ` (${volumePages})` : ''}, {year}.
+  </p>
+
+  {abstract && (
+    <details class="pub-abstract">
+      <summary>{t.showAbstract}</summary>
+      <div class="abstract-content">
+        <p>{abstract}</p>
+      </div>
+    </details>
+  )}
+
+  <div class="pub-actions">
+    {pdfFile && (
+      <a href={pdfFile} class="btn btn-primary" target="_blank" download>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="12" y2="18"></line>
+          <line x1="15" y1="15" x2="12" y2="18"></line>
+        </svg>
+        {t.downloadPdf}
+      </a>
+    )}
+
+    {doiUrl && (
+      <a href={doiUrl} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+        {t.viewDoi}
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .pub-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .pub-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .pub-type-badge {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .pub-year {
+    font-weight: 700;
+    color: var(--color-secondary);
+    font-size: 0.95rem;
+  }
+
+  .pub-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+    color: var(--color-primary);
+  }
+
+  .pub-authors {
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .pub-citation {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pub-abstract {
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .pub-abstract summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .abstract-content {
+    margin-top: 0.5rem;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  .pub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  canonicalUrl?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  // Google Scholar / Highwire Press Meta Tags
+  citationTitle?: string;
+  citationAuthor?: string;
+  citationDate?: string | number;
+  citationJournal?: string;
+  citationPdfUrl?: string;
+  citationDoi?: string;
+}
+
+const {
+  title,
+  description = "الموقع الأكاديمي الرسمي للأستاذ الدكتور الطاهر عبو - أستاذ التعليم العالي في الحضارة الإفريقية بجامعة أحمد دراية، أدرار، الجزائر.",
+  lang = "ar",
+  canonicalUrl = Astro.url.href,
+  image = "/images/og-preview.jpg",
+  type = "website",
+  citationTitle,
+  citationAuthor = "Tahar Abbou",
+  citationDate,
+  citationJournal,
+  citationPdfUrl,
+  citationDoi,
+} = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.origin : "https://www.abboutahar.com";
+const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{title} | أ.د. طاهر عبو - Pr. Tahar Abbou</title>
+<meta name="title" content={`${title} | أ.د. طاهر عبو`} />
+<meta name="description" content={description} />
+<meta name="author" content="Prof. Dr. Tahar Abbou" />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullImageUrl} />
+<meta property="og:site_name" content="Prof. Tahar Abbou - Academic Website" />
+<meta property="og:locale" content={lang === 'ar' ? 'ar_DZ' : lang === 'fr' ? 'fr_FR' : 'en_US'} />
+
+<!-- Twitter Meta Tags -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={fullImageUrl} />
+
+<!-- Academic / Google Scholar Meta Tags (Highwire Press Format) -->
+{citationTitle && <meta name="citation_title" content={citationTitle} />}
+{citationAuthor && <meta name="citation_author" content={citationAuthor} />}
+{citationDate && <meta name="citation_publication_date" content={String(citationDate)} />}
+{citationJournal && <meta name="citation_journal_title" content={citationJournal} />}
+{citationDoi && <meta name="citation_doi" content={citationDoi} />}
+{citationPdfUrl && <meta name="citation_pdf_url" content={citationPdfUrl.startsWith('http') ? citationPdfUrl : `${siteUrl}${citationPdfUrl}`} />}
+
+<!-- JSON-LD Structured Data for Academic Person -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Tahar Abbou",
+  "alternateName": ["الطاهر عبو", "Pr. Tahar Abbou", "Dr. Tahar Abbou"],
+  "jobTitle": "Full Professor of African Civilization",
+  "affiliation": {
+    "@type": "EducationalOrganization",
+    "name": "Ahmed Draia University of Adrar, Algeria",
+    "url": "https://www.univ-adrar.edu.dz"
+  },
+  "url": "https://www.abboutahar.com",
+  "sameAs": [
+    "https://orcid.org",
+    "https://scholar.google.com",
+    "https://www.researchgate.net"
+  ]
+})} />

@@ -1,0 +1,28 @@
+# ==============================================================
+# Wix to Astro Redirects & CMS Routing
+# Netlify _redirects file
+# ==============================================================
+
+# Decap CMS Admin Routing
+/admin/*    /admin/index.html   200
+
+# Canonical domain redirect (non-www to www or vice versa)
+# http://abboutahar.com/*  https://www.abboutahar.com/:splat  301!
+
+# --------------------------------------------------------------
+# Wix Old Page Mappings (Preserving Google citations & bookmarks)
+# --------------------------------------------------------------
+/publications           /ar/publications      301
+/publications/*         /ar/publications      301
+/conferences            /ar/conferences       301
+/scientific-activities  /ar/activities        301
+/courses-taught         /ar/courses           301
+/courses                /ar/courses           301
+/photos                 /ar/photos            301
+/useful-links           /ar/links             301
+/academic-prizes        /ar/prizes            301
+/about                  /ar/                  301
+/contact                /ar/                  301
+
+# Default root route to Arabic homepage
+/                       /ar/                  302

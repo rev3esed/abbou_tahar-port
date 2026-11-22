@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import LessonCard from '../../components/LessonCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'ar' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const allCourses = await getCollection('courses');
+
+const pageTitles = {
+  ar: "المحاضرات والدروس الجامعية",
+  en: "Courses & Teaching Materials",
+  fr: "Enseignements & Supports de Cours",
+};
+---
+
+<Layout title={pageTitles[lang as 'ar' | 'en' | 'fr']} lang={lang as 'ar' | 'en' | 'fr'}>
+  <div class="page-header">
+    <h1 class="page-title">{pageTitles[lang as 'ar' | 'en' | 'fr']}</h1>
+    <p class="page-sub">
+      {lang === 'ar' && "المقاييس المشرفة عليها، مطبوعات الدروس، العروض التقديمية، وملفات التمارين والبحوث للطلبة."}
+      {lang === 'en' && "Syllabi, lecture notes, slide decks, and downloadable course materials for students."}
+      {lang === 'fr' && "Programmes des cours, polycopiés, présentations et documents téléchargeables pour les étudiants."}
+    </p>
+  </div>
+
+  <div class="courses-list">
+    {allCourses.map((c) => (
+      <LessonCard
+        courseTitle={c.data.title}
+        level={c.data.level}
+        semester={c.data.semester}
+        year={c.data.academic_year}
+        syllabus={c.data.syllabus}
+        accessMode={c.data.access_mode}
+        passcode={c.data.passcode}
+        lessons={c.data.lessons}
+        lang={lang as 'ar' | 'en' | 'fr'}
+      />
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 1rem;
+  }
+  .page-title {
+    font-size: 1.85rem;
+    color: var(--color-primary);
+  }
+  .page-sub {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+  }
+</style>

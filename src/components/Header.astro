@@ -1,0 +1,219 @@
+---
+export interface Props {
+  currentLang: 'ar' | 'en' | 'fr';
+}
+
+const { currentLang } = Astro.props;
+
+const navTranslations = {
+  ar: {
+    title: "أ.د. الطاهر عبو",
+    subtitle: "أستاذ الحضارة الإفريقية - جامعة أدرار",
+    home: "الرئيسية",
+    publications: "المنشورات العلمية",
+    conferences: "المؤتمرات",
+    courses: "المحاضرات والدروس",
+    activities: "الأنشطة العلمية",
+    prizes: "الجوائز",
+    photos: "معرض الصور",
+    links: "روابط مفيدة",
+  },
+  en: {
+    title: "Prof. Dr. Tahar Abbou",
+    subtitle: "African Civilization - University of Adrar",
+    home: "Home",
+    publications: "Publications",
+    conferences: "Conferences",
+    courses: "Courses & Lessons",
+    activities: "Scientific Activities",
+    prizes: "Prizes",
+    photos: "Photos",
+    links: "Useful Links",
+  },
+  fr: {
+    title: "Pr. Tahar Abbou",
+    subtitle: "Civilisation Africaine - Université d'Adrar",
+    home: "Accueil",
+    publications: "Publications",
+    conferences: "Conférences",
+    courses: "Cours & Enseignement",
+    activities: "Activités Scientifiques",
+    prizes: "Prix & Distinctions",
+    photos: "Galerie Photos",
+    links: "Liens Utiles",
+  },
+};
+
+const t = navTranslations[currentLang];
+const prefix = `/${currentLang}`;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="brand">
+      <a href={`${prefix}/`} class="brand-title">{t.title}</a>
+      <span class="brand-sub">{t.subtitle}</span>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-toggle" aria-label="Toggle Menu" id="menuToggle">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav class="main-nav" id="mainNav">
+      <ul class="nav-links">
+        <li><a href={`${prefix}/`}>{t.home}</a></li>
+        <li><a href={`${prefix}/publications`}>{t.publications}</a></li>
+        <li><a href={`${prefix}/conferences`}>{t.conferences}</a></li>
+        <li><a href={`${prefix}/courses`}>{t.courses}</a></li>
+        <li><a href={`${prefix}/activities`}>{t.activities}</a></li>
+        <li><a href={`${prefix}/prizes`}>{t.prizes}</a></li>
+        <li><a href={`${prefix}/photos`}>{t.photos}</a></li>
+        <li><a href={`${prefix}/links`}>{t.links}</a></li>
+      </ul>
+
+      <!-- Language Selector -->
+      <div class="lang-switcher">
+        <a href="/ar/" class={currentLang === 'ar' ? 'active-lang' : ''}>العربية</a>
+        <span class="divider">|</span>
+        <a href="/en/" class={currentLang === 'en' ? 'active-lang' : ''}>EN</a>
+        <span class="divider">|</span>
+        <a href="/fr/" class={currentLang === 'fr' ? 'active-lang' : ''}>FR</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('mainNav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('nav-open');
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    background: #ffffff;
+    border-bottom: 2px solid var(--color-gold);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.25rem;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .brand-sub {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.1rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text);
+    padding: 0.25rem 0.2rem;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-secondary);
+  }
+
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    background: #f1f5f9;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .lang-switcher a {
+    color: var(--color-text-muted);
+  }
+
+  .lang-switcher a.active-lang {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .divider {
+    color: #cbd5e1;
+  }
+
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 960px) {
+    .mobile-toggle {
+      display: block;
+    }
+
+    .main-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .main-nav.nav-open {
+      display: flex;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.75rem;
+      text-align: center;
+    }
+  }
+</style>

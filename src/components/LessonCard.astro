@@ -1,0 +1,291 @@
+---
+export interface LessonItem {
+  lesson_num: number;
+  lesson_title: string;
+  lesson_date?: string;
+  summary?: string;
+  file_url: string;
+}
+
+export interface Props {
+  courseTitle: string;
+  level: string;
+  semester: string;
+  year: string;
+  syllabus?: string;
+  accessMode: 'public' | 'protected';
+  passcode?: string;
+  lessons: LessonItem[];
+  lang: 'ar' | 'en' | 'fr';
+}
+
+const {
+  courseTitle,
+  level,
+  semester,
+  year,
+  syllabus,
+  accessMode,
+  passcode = '',
+  lessons,
+  lang,
+} = Astro.props;
+
+const courseId = `course-${Math.random().toString(36).substring(2, 9)}`;
+
+const labels = {
+  ar: {
+    semester: "السداسي",
+    year: "السنة الجامعية",
+    syllabus: "برنامج وأهداف المقياس:",
+    lessonsCount: "محاضرة متوفرة",
+    download: "تحميل الملف",
+    protectedNotice: "هذا المقياس مخصص لطلبة الفوج ومحمي برمز سري. أدخل الرمز الذي زوّدكم به الأستاذ في المدرج:",
+    enterPass: "أدخل الرمز السري",
+    unlockBtn: "فتح المحاضرات",
+    wrongPass: "الرمز السري غير صحيح، يرجى مراجعة الأستاذ.",
+  },
+  en: {
+    semester: "Semester",
+    year: "Academic Year",
+    syllabus: "Syllabus & Objectives:",
+    lessonsCount: "lessons available",
+    download: "Download File",
+    protectedNotice: "This course is restricted to enrolled students. Enter the passcode provided in class:",
+    enterPass: "Enter passcode",
+    unlockBtn: "Unlock Lessons",
+    wrongPass: "Incorrect passcode. Please verify with the professor.",
+  },
+  fr: {
+    semester: "Semestre",
+    year: "Année universitaire",
+    syllabus: "Syllabus et objectifs :",
+    lessonsCount: "cours disponibles",
+    download: "Télécharger",
+    protectedNotice: "Ce cours est réservé aux étudiants inscrits. Entrez le mot de passe communiqué en cours :",
+    enterPass: "Mot de passe",
+    unlockBtn: "Déverrouiller",
+    wrongPass: "Mot de passe incorrect.",
+  },
+};
+
+const t = labels[lang];
+---
+
+<div class="course-card card" id={courseId} data-protected={accessMode === 'protected' ? 'true' : 'false'} data-expected-pass={passcode}>
+  <div class="course-header">
+    <div>
+      <div class="course-meta">
+        <span class="badge badge-primary">{level}</span>
+        <span class="badge badge-gold">{t.semester} {semester} ({year})</span>
+        {accessMode === 'protected' ? (
+          <span class="badge" style="background:#fee2e2; color:#991b1b;">🔒 {lang === 'ar' ? 'خاص بالطلبة المسجلين' : 'Passcode Protected'}</span>
+        ) : (
+          <span class="badge" style="background:#dcfce7; color:#166534;">🌐 {lang === 'ar' ? 'متاح للجميع' : 'Open Access'}</span>
+        )}
+      </div>
+      <h2 class="course-title">{courseTitle}</h2>
+    </div>
+  </div>
+
+  {syllabus && (
+    <div class="syllabus-box">
+      <strong>{t.syllabus}</strong>
+      <p>{syllabus}</p>
+    </div>
+  )}
+
+  {accessMode === 'protected' && (
+    <div class="passcode-lock-panel" id={`${courseId}-lock`}>
+      <p>{t.protectedNotice}</p>
+      <div class="passcode-form">
+        <input type="password" placeholder={t.enterPass} id={`${courseId}-input`} class="passcode-input" />
+        <button type="button" class="btn btn-primary" id={`${courseId}-btn`}>{t.unlockBtn}</button>
+      </div>
+      <p class="error-msg" id={`${courseId}-error`} style="display:none; color:#dc2626; margin-top:0.5rem; font-size:0.85rem;">{t.wrongPass}</p>
+    </div>
+  )}
+
+  <div class="lessons-container" id={`${courseId}-lessons`} style={accessMode === 'protected' ? 'display:none;' : ''}>
+    <h3 class="lessons-heading">{lessons.length} {t.lessonsCount}</h3>
+    
+    <div class="lessons-list">
+      {lessons.map((lesson) => (
+        <div class="lesson-row">
+          <div class="lesson-info">
+            <span class="lesson-number">#{lesson.lesson_num}</span>
+            <div>
+              <h4 class="lesson-name">{lesson.lesson_title}</h4>
+              {lesson.summary && <p class="lesson-summary">{lesson.summary}</p>}
+              {lesson.lesson_date && <span class="lesson-date">{lesson.lesson_date}</span>}
+            </div>
+          </div>
+          <a href={lesson.file_url} class="btn btn-outline download-btn" target="_blank" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            {t.download}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ courseId, passcode, accessMode }}>
+  if (accessMode === 'protected') {
+    const lockPanel = document.getElementById(`${courseId}-lock`);
+    const lessonsBox = document.getElementById(`${courseId}-lessons`);
+    const btn = document.getElementById(`${courseId}-btn`);
+    const input = document.getElementById(`${courseId}-input`);
+    const errorMsg = document.getElementById(`${courseId}-error`);
+
+    const storedPass = sessionStorage.getItem(`auth_${courseId}`);
+    if (storedPass === passcode) {
+      if (lockPanel) lockPanel.style.display = 'none';
+      if (lessonsBox) lessonsBox.style.display = 'block';
+    }
+
+    if (btn && input) {
+      btn.addEventListener('click', () => {
+        if (input.value.trim() === passcode) {
+          sessionStorage.setItem(`auth_${courseId}`, passcode);
+          if (lockPanel) lockPanel.style.display = 'none';
+          if (lessonsBox) lessonsBox.style.display = 'block';
+          if (errorMsg) errorMsg.style.display = 'none';
+        } else {
+          if (errorMsg) errorMsg.style.display = 'block';
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+  .course-card {
+    border-top: 4px solid var(--color-primary);
+  }
+
+  .course-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .course-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .syllabus-box {
+    background: #f8fafc;
+    border-left: 3px solid var(--color-gold);
+    padding: 0.85rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    color: #475569;
+  }
+
+  html[dir="rtl"] .syllabus-box {
+    border-left: none;
+    border-right: 3px solid var(--color-gold);
+  }
+
+  .passcode-lock-panel {
+    background: #fffbeb;
+    border: 1px dashed #f59e0b;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .passcode-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .passcode-input {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    flex: 1;
+    max-width: 250px;
+  }
+
+  .lessons-heading {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.4rem;
+  }
+
+  .lessons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .lesson-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    gap: 1rem;
+  }
+
+  .lesson-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .lesson-number {
+    font-weight: 700;
+    color: var(--color-primary);
+    background: #e2e8f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .lesson-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .lesson-summary {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .lesson-date {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+
+  .download-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .lesson-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .download-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,225 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded files (PDFs, PPTs, images) are stored in the repository
+media_folder: "public/uploads"
+# How files are referenced in the HTML
+public_folder: "/uploads"
+
+# Localized display for the CMS interface
+locale: "fr" # or "en"
+
+# Collections defining all academic sections
+collections:
+  # -------------------------------------------------------------
+  # 1. PUBLICATIONS (الأبحاث والمؤلفات العلمية)
+  # -------------------------------------------------------------
+  - name: "publications"
+    label: "Publications | المنشورات العلمية"
+    label_singular: "Publication | منشور علمي"
+    folder: "src/content/publications"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title / عنوان البحث", name: "title", widget: "string" }
+      - { label: "Language / لغة المنشور", name: "lang", widget: "select", options: [
+          { label: "العربية (Arabic)", value: "ar" },
+          { label: "English", value: "en" },
+          { label: "Français", value: "fr" }
+        ], default: "ar" }
+      - { label: "Authors / المؤلفون", name: "authors", widget: "string", default: "Pr. Tahar Abbou" }
+      - { label: "Publication Type / نوع المنشور", name: "type", widget: "select", options: [
+          { label: "Journal Article (مقال في مجلة علمية محكمة)", value: "journal" },
+          { label: "Book Chapter (فصل في كتاب جماعي)", value: "chapter" },
+          { label: "Authored Book (كتاب مؤلف)", value: "book" },
+          { label: "Conference Proceeding (مداخلة منشورة)", value: "proceeding" }
+        ], default: "journal" }
+      - { label: "Journal or Publisher / المجلة أو دار النشر", name: "journal", widget: "string" }
+      - { label: "Year / سنة النشر", name: "year", widget: "number", value_type: "int" }
+      - { label: "Volume / Issue / Pages (المجلد والصفحات)", name: "volume_pages", widget: "string", required: false }
+      - { label: "DOI Link / رابط DOI أو الرابط المرجعي", name: "doi_url", widget: "string", required: false }
+      - { label: "Full Text PDF / ملف البحث كاملاً", name: "pdf_file", widget: "file", required: false }
+      - { label: "Featured on Homepage? / إبراز في الصفحة الرئيسية؟", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Abstract / ملخص البحث", name: "body", widget: "markdown", required: false }
+
+  # -------------------------------------------------------------
+  # 2. CONFERENCES (المؤتمرات والملتقيات)
+  # -------------------------------------------------------------
+  - name: "conferences"
+    label: "Conferences | المؤتمرات والملتقيات"
+    label_singular: "Conference | مؤتمر / ملتقى"
+    folder: "src/content/conferences"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: "Paper Title / عنوان المداخلة", name: "title", widget: "string" }
+      - { label: "Conference Name / عنوان الملتقى أو المؤتمر", name: "conference_name", widget: "string" }
+      - { label: "Scope / النطاق", name: "scope", widget: "select", options: [
+          { label: "International / دولي", value: "international" },
+          { label: "National / وطني", value: "national" }
+        ], default: "international" }
+      - { label: "Location / المكان (المدينة، الدولة)", name: "location", widget: "string" }
+      - { label: "Date / التاريخ", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Role / صفتي في الفعالية", name: "role", widget: "select", options: [
+          { label: "Presenter / متدخل", value: "presenter" },
+          { label: "Keynote Speaker / متحدث رئيسي", value: "keynote" },
+          { label: "Scientific Committee / اللجنة العلمية", value: "committee" },
+          { label: "Session Chair / رئيس جلسة", value: "chair" }
+        ], default: "presenter" }
+      - { label: "Language / لغة المداخلة", name: "lang", widget: "select", options: ["ar", "en", "fr"], default: "ar" }
+      - { label: "Certificate or Program File / شهادة المشاركة أو البرنامج", name: "file", widget: "file", required: false }
+      - { label: "Abstract & Details / ملخص وتفاصيل", name: "body", widget: "markdown", required: false }
+
+  # -------------------------------------------------------------
+  # 3. COURSES & LESSONS (المحاضرات والدروس للطلبة)
+  # -------------------------------------------------------------
+  - name: "courses"
+    label: "Courses & Lessons | الدروس والمحاضرات"
+    label_singular: "Course | مقياس دراسي"
+    folder: "src/content/courses"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Course Name / اسم المقياس", name: "title", widget: "string" }
+      - { label: "Academic Level / الطور والمستوى", name: "level", widget: "select", options: [
+          { label: "Licence 1 (سنة أولى ليسانس)", value: "L1" },
+          { label: "Licence 2 (سنة ثانية ليسانس)", value: "L2" },
+          { label: "Licence 3 (سنة ثالثة ليسانس)", value: "L3" },
+          { label: "Master 1 (سنة أولى ماستر)", value: "M1" },
+          { label: "Master 2 (سنة ثانية ماستر)", value: "M2" },
+          { label: "Doctorate (دكتوراه)", value: "Doctorate" }
+        ], default: "M1" }
+      - { label: "Semester / السداسي", name: "semester", widget: "select", options: ["S1", "S2", "Annual"], default: "S1" }
+      - { label: "Academic Year / السنة الجامعية", name: "academic_year", widget: "string", default: "2025-2026" }
+      - { label: "Language / لغة التدريس", name: "lang", widget: "select", options: ["ar", "en", "fr"], default: "ar" }
+      - { label: "Access Mode / إمكانية الوصول", name: "access_mode", widget: "select", options: [
+          { label: "Public (متاح للجميع مباشرة)", value: "public" },
+          { label: "Class Passcode Protected (محمي برمز سري للطلبة)", value: "protected" }
+        ], default: "public" }
+      - { label: "Class Passcode / الرمز السري (إذا كان محمياً)", name: "passcode", widget: "string", required: false, default: "" }
+      - { label: "Syllabus / برنامج المقياس والأهداف", name: "syllabus", widget: "markdown", required: false }
+      - label: "Lessons & Files / قائمة المحاضرات والملفات"
+        name: "lessons"
+        widget: "list"
+        fields:
+          - { label: "Lesson Number / رقم المحاضرة", name: "lesson_num", widget: "number", value_type: "int" }
+          - { label: "Lesson Title / عنوان المحاضرة", name: "lesson_title", widget: "string" }
+          - { label: "Date / التاريخ", name: "lesson_date", widget: "date", required: false }
+          - { label: "Summary / نبذة موجزة", name: "summary", widget: "string", required: false }
+          - { label: "Lecture File (PDF/PPT/DOCX) / ملف المحاضرة", name: "file_url", widget: "file", required: true }
+
+  # -------------------------------------------------------------
+  # 4. SCIENTIFIC ACTIVITIES (الأنشطة العلمية والمخابر)
+  # -------------------------------------------------------------
+  - name: "activities"
+    label: "Scientific Activities | الأنشطة العلمية"
+    folder: "src/content/activities"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Activity Title / عنوان النشاط", name: "title", widget: "string" }
+      - { label: "Entity or Institution / الهيئة أو المخبر", name: "institution", widget: "string" }
+      - { label: "Role / الصفة أو الدور", name: "role", widget: "string" }
+      - { label: "Period / الفترة الزمنية", name: "period", widget: "string" }
+      - { label: "Language / اللغة", name: "lang", widget: "select", options: ["ar", "en", "fr"], default: "ar" }
+      - { label: "Details / التفاصيل والمهام", name: "body", widget: "markdown" }
+
+  # -------------------------------------------------------------
+  # 5. ANNOUNCEMENTS (الإعلانات والتنبيهات)
+  # -------------------------------------------------------------
+  - name: "announcements"
+    label: "Announcements | الإعلانات والأخبار"
+    folder: "src/content/announcements"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Announcement Title / عنوان الإعلان", name: "title", widget: "string" }
+      - { label: "Date / تاريخ النشر", name: "date", widget: "date" }
+      - { label: "Category / التصنيف", name: "category", widget: "select", options: [
+          { label: "Students Notice (إعلان للطلبة)", value: "students" },
+          { label: "Call for Papers (دعوة للنشر / مشاركة في ملتقى)", value: "cfp" },
+          { label: "Thesis Defense (مناقشة أطروحة)", value: "defense" },
+          { label: "General News (أخبار عامة)", value: "general" }
+        ], default: "general" }
+      - { label: "Language / اللغة", name: "lang", widget: "select", options: ["ar", "en", "fr"], default: "ar" }
+      - { label: "Attachment (PDF / Image) / مرفق", name: "attachment", widget: "file", required: false }
+      - { label: "Content / نص الإعلان", name: "body", widget: "markdown" }
+
+  # -------------------------------------------------------------
+  # 6. ACADEMIC PRIZES (الجوائز والتكريمات)
+  # -------------------------------------------------------------
+  - name: "prizes"
+    label: "Academic Prizes | الجوائز العلمية"
+    folder: "src/content/prizes"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: "Prize Name / اسم الجائزة أو التكريم", name: "title", widget: "string" }
+      - { label: "Awarding Body / الهيئة المانحة", name: "institution", widget: "string" }
+      - { label: "Year / السنة", name: "year", widget: "number", value_type: "int" }
+      - { label: "Language / اللغة", name: "lang", widget: "select", options: ["ar", "en", "fr"], default: "ar" }
+      - { label: "Certificate / Photo / صورة الشهادة أو التكريم", name: "image", widget: "image", required: false }
+      - { label: "Description / نبذة عن التكريم", name: "body", widget: "markdown", required: false }
+
+  # -------------------------------------------------------------
+  # 7. PHOTOS GALLERY (معرض الصور)
+  # -------------------------------------------------------------
+  - name: "photos"
+    label: "Photos | معرض الصور"
+    folder: "src/content/photos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title / Caption / عنوان أو وصف الصورة", name: "title", widget: "string" }
+      - { label: "Occasion or Event / المناسبة أو الفعالية", name: "event", widget: "string" }
+      - { label: "Date / التاريخ", name: "date", widget: "date", required: false }
+      - { label: "Photo / الصورة", name: "photo", widget: "image" }
+
+  # -------------------------------------------------------------
+  # 8. USEFUL LINKS (روابط مفيدة)
+  # -------------------------------------------------------------
+  - name: "links"
+    label: "Useful Links | روابط مفيدة"
+    folder: "src/content/links"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Link Title / عنوان الرابط", name: "title", widget: "string" }
+      - { label: "URL / الرابط", name: "url", widget: "string" }
+      - { label: "Category / التصنيف", name: "category", widget: "select", options: [
+          { label: "University & Portals (مواقع وهيئات جامعية)", value: "university" },
+          { label: "Research Platforms (منصات وقواعد بحثية)", value: "research" },
+          { label: "Manuscript Portals (بوابات المخطوطات)", value: "manuscripts" },
+          { label: "Academic Profiles (حسابات علمية)", value: "profiles" }
+        ], default: "research" }
+      - { label: "Description / نبذة تعريفية", name: "description", widget: "string", required: false }
+
+  # -------------------------------------------------------------
+  # 9. PROFESSOR PROFILE (السيرة الذاتية والمعلومات العامة)
+  # -------------------------------------------------------------
+  - name: "profile"
+    label: "Profile Settings | السيرة والبيانات الشخصية"
+    files:
+      - file: "src/content/profile/about.json"
+        label: "About Me & Contacts / السيرة الذاتية ومعلومات التواصل"
+        name: "about"
+        fields:
+          - { label: "Name (Arabic) / الاسم بالعربية", name: "name_ar", widget: "string", default: "أ.د. الطاهر عبو" }
+          - { label: "Name (English) / الاسم بالإنجليزية", name: "name_en", widget: "string", default: "Prof. Dr. Tahar Abbou" }
+          - { label: "Name (French) / الاسم بالفرنسية", name: "name_fr", widget: "string", default: "Pr. Tahar Abbou" }
+          - { label: "Title (Arabic)", name: "title_ar", widget: "string", default: "أستاذ التعليم العالي في الحضارة الإفريقية - جامعة أدرار" }
+          - { label: "Title (English)", name: "title_en", widget: "string", default: "Full Professor of African Civilization - University of Adrar" }
+          - { label: "Title (French)", name: "title_fr", widget: "string", default: "Professeur de l'Enseignement Supérieur en Civilisation Africaine - Université d'Adrar" }
+          - { label: "Profile Photo / الصورة الشخصية", name: "avatar", widget: "image" }
+          - { label: "Email / البريد الإلكتروني الأكاديمي", name: "email", widget: "string" }
+          - { label: "Office Location / المكتب", name: "office", widget: "string", required: false }
+          - { label: "Google Scholar URL", name: "scholar_url", widget: "string", required: false }
+          - { label: "ORCID URL", name: "orcid_url", widget: "string", required: false }
+          - { label: "ResearchGate URL", name: "researchgate_url", widget: "string", required: false }
+          - { label: "ASJP URL / منصة المجلات الجزائرية", name: "asjp_url", widget: "string", required: false }
+          - { label: "Bio in Arabic / السيرة المختصرة بالعربية", name: "bio_ar", widget: "markdown" }
+          - { label: "Bio in English / السيرة المختصرة بالإنجليزية", name: "bio_en", widget: "markdown" }
+          - { label: "Bio in French / السيرة المختصرة بالفرنسية", name: "bio_fr", widget: "markdown" }
