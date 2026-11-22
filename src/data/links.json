@@ -1,0 +1,44 @@
+[
+  {
+    "title": "University Ahmed Draia of Adrar",
+    "url": "https://en.univ-adrar.edu.dz/",
+    "category": "Academic Institution",
+    "description": "Official institutional portal of the University of Adrar, Algeria, supporting higher education, doctoral faculties, and scientific research in the Algerian Sahara."
+  },
+  {
+    "title": "Platform of Algerian Manuscripts in Africa (PAM)",
+    "url": "https://pam.univ-adrar.dz/",
+    "category": "Manuscript Repository",
+    "description": "The landmark digital gateway preserving, cataloging, and showcasing historic Algerian and Saharan manuscript collections in West Africa."
+  },
+  {
+    "title": "West African Research Association (WARA)",
+    "url": "https://www.westafricanresearchassociation.org/",
+    "category": "Scholarly Society",
+    "description": "Based at Boston University, WARA fosters collaborative research and scholarly exchange between scholars in West Africa and North America. Prof. Abbou is a Lifetime Member."
+  },
+  {
+    "title": "Algerian Scientific Journal Platform (ASJP)",
+    "url": "https://www.asjp.cerist.dz/en/PresentationRevue/132",
+    "category": "Research Platform",
+    "description": "The national publishing platform for peer-reviewed Algerian scientific journals, hosted by CERIST, featuring articles published in Rufuf and other classified journals."
+  },
+  {
+    "title": "Intensive Languages Teaching Centre (CEIL)",
+    "url": "https://www.univ-adrar.edu.dz/ceil/",
+    "category": "Language Center",
+    "description": "Center dedicated to accelerated language acquisition in English, French, Spanish, and Turkish for academics, doctoral researchers, and professionals."
+  },
+  {
+    "title": "West African Arabic Manuscript Database (WAAMD)",
+    "url": "https://waamd.lib.berkeley.edu/home",
+    "category": "Archival Database",
+    "description": "A collaborative international database hosted by UC Berkeley documenting Arabic manuscript collections throughout West Africa."
+  },
+  {
+    "title": "Mirath Tuat (ميراث توات)",
+    "url": "https://adjaafri.univ-adrar.edu.dz/",
+    "category": "Heritage Portal",
+    "description": "Dedicated cultural and historical repository honoring the heritage, scholars, and manuscript traditions of the Tuat oasis region."
+  }
+]

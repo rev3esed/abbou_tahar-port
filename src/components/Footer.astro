@@ -1,115 +1,204 @@
 ---
-export interface Props {
-  currentLang: 'ar' | 'en' | 'fr';
-}
-
-const { currentLang } = Astro.props;
-
-const footerText = {
-  ar: {
-    affiliation: "جامعة أحمد دراية - أدرار، الجزائر | مخبر المخطوطات الجزائرية في إفريقيا",
-    office: "كلية الآداب واللغات / مركز التعليم المكثف للغات (CEIL)",
-    adminLink: "إدارة المحتوى (تسجيل الدخول)",
-    rights: "جميع الحقوق محفوظة © " + new Date().getFullYear() + " أ.د. الطاهر عبو",
-  },
-  en: {
-    affiliation: "Ahmed Draia University of Adrar, Algeria | Laboratory of Algerian Manuscripts in Africa",
-    office: "Faculty of Letters and Languages / Intensive Language Center (CEIL)",
-    adminLink: "Admin Dashboard (Login)",
-    rights: "All rights reserved © " + new Date().getFullYear() + " Prof. Dr. Tahar Abbou",
-  },
-  fr: {
-    affiliation: "Université Ahmed Draia d'Adrar, Algérie | Laboratoire des Manuscrits Algériens en Afrique",
-    office: "Faculté des Lettres et des Langues / Centre d'Enseignement Intensif des Langues (CEIL)",
-    adminLink: "Espace Administration (Connexion)",
-    rights: "Tous droits réservés © " + new Date().getFullYear() + " Pr. Tahar Abbou",
-  },
-};
-
-const t = footerText[currentLang];
+import profile from '../data/profile.json';
 ---
 
 <footer class="site-footer">
-  <div class="container footer-content">
-    <div class="footer-info">
-      <p class="affiliation">{t.affiliation}</p>
-      <p class="office">{t.office}</p>
+  <div class="container footer-container">
+    <div class="footer-grid">
+      <!-- Col 1: Scholar Details -->
+      <div class="footer-col">
+        <h3 class="footer-name">{profile.name}</h3>
+        <p class="footer-role">{profile.title}</p>
+        <p class="footer-affil">{profile.affiliation}</p>
+        <p class="footer-roles-tag">
+          Director, Intensive Language Center (CEIL) • Lifetime Member, West African Research Association (WARA, Boston)
+        </p>
+      </div>
+
+      <!-- Col 2: Direct Contact -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Direct Contacts</h4>
+        <ul class="footer-list">
+          <li>
+            <span class="icon">✉</span>
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          </li>
+          <li>
+            <span class="icon">✉</span>
+            <a href={`mailto:${profile.secondary_email}`}>{profile.secondary_email}</a>
+          </li>
+          <li>
+            <span class="icon">📱</span>
+            <span>WhatsApp: {profile.whatsapp.join(' / ')}</span>
+          </li>
+          <li>
+            <span class="icon">📍</span>
+            <span>{profile.address}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Quick Navigation & Profiles -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Academic Portals</h4>
+        <ul class="footer-list">
+          <li><a href="https://en.univ-adrar.edu.dz/" target="_blank" rel="noopener">University of Adrar Portal ↗</a></li>
+          <li><a href="https://pam.univ-adrar.dz/" target="_blank" rel="noopener">Platform of Algerian Manuscripts (PAM) ↗</a></li>
+          <li><a href="https://www.westafricanresearchassociation.org/" target="_blank" rel="noopener">West African Research Association (WARA) ↗</a></li>
+          <li><a href="https://www.asjp.cerist.dz" target="_blank" rel="noopener">Algerian Scientific Journal Platform (ASJP) ↗</a></li>
+        </ul>
+      </div>
     </div>
-    
-    <div class="footer-meta">
-      <p>{t.rights}</p>
-      <a href="/admin/" class="admin-badge" target="_blank" rel="noopener noreferrer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-        {t.adminLink}
-      </a>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        © {new Date().getFullYear()} Prof. Dr. Tahar Abbou. All rights reserved.
+      </div>
+      
+      <div class="footer-meta-links">
+        <a href="/uploads/cv-tahar-abbou.pdf" target="_blank" download>Curriculum Vitae</a>
+        <span class="sep">•</span>
+        <a href="/admin/" target="_blank" rel="noopener" class="admin-login-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Admin Login
+        </a>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: #0f172a;
+    background: #0a192f;
     color: #94a3b8;
-    padding: 2rem 0;
-    margin-top: auto;
-    font-size: 0.85rem;
-    border-top: 3px solid var(--color-gold);
+    padding: 4rem 0 2rem;
+    border-top: 3px solid var(--color-accent);
+    font-size: 0.9rem;
   }
 
-  .footer-content {
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.2fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-name {
+    font-family: var(--font-serif);
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .footer-role {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-affil {
+    color: #cbd5e1;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-roles-tag {
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .footer-heading {
+    color: #f1f5f9;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .footer-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .footer-list a {
+    color: #cbd5e1;
+  }
+
+  .footer-list a:hover {
+    color: var(--color-accent);
+  }
+
+  .icon {
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+
+  .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.75rem;
     flex-wrap: wrap;
     gap: 1rem;
+    font-size: 0.825rem;
   }
 
-  .affiliation {
-    color: #f1f5f9;
-    font-weight: 600;
+  .footer-copy {
+    color: #64748b;
   }
 
-  .office {
-    color: #cbd5e1;
-    font-size: 0.8rem;
-    margin-top: 0.2rem;
-  }
-
-  .footer-meta {
+  .footer-meta-links {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.4rem;
+    align-items: center;
+    gap: 0.75rem;
   }
 
-  .admin-badge {
+  .footer-meta-links a {
+    color: #94a3b8;
+  }
+
+  .footer-meta-links a:hover {
+    color: #ffffff;
+  }
+
+  .sep {
+    color: #475569;
+  }
+
+  .admin-login-pill {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: #94a3b8;
-    background: #1e293b;
-    padding: 0.25rem 0.6rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    font-size: 0.75rem;
-    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .admin-badge:hover {
-    color: #f8fafc;
-    background: #334155;
+  .admin-login-pill:hover {
+    background: rgba(255, 255, 255, 0.15);
   }
 
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
-      text-align: center;
-      align-items: center;
-    }
-    .footer-meta {
-      align-items: center;
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
   }
 </style>

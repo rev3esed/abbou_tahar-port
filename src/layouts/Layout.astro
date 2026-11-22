@@ -6,7 +6,6 @@ import Footer from '../components/Footer.astro';
 export interface Props {
   title: string;
   description?: string;
-  lang?: 'ar' | 'en' | 'fr';
   citationTitle?: string;
   citationDate?: string | number;
   citationJournal?: string;
@@ -15,33 +14,30 @@ export interface Props {
 
 const {
   title,
-  description,
-  lang = 'ar',
+  description = "Official Academic Website of Prof. Dr. Tahar Abbou - Full Professor of African Civilization at Ahmed Draia University of Adrar, Algeria.",
   citationTitle,
   citationDate,
   citationJournal,
   citationPdfUrl,
 } = Astro.props;
-
-const isRtl = lang === 'ar';
 ---
 
 <!doctype html>
-<html lang={lang} dir={isRtl ? 'rtl' : 'ltr'}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
-    <!-- Google Fonts: Cairo & Amiri for Arabic, Inter for Latin -->
+    <!-- Google Fonts: Newsreader for editorial elegance + Plus Jakarta Sans for crisp readability -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <AcademicSEO
       title={title}
       description={description}
-      lang={lang}
+      lang="en"
       citationTitle={citationTitle}
       citationDate={citationDate}
       citationJournal={citationJournal}
@@ -50,14 +46,20 @@ const isRtl = lang === 'ar';
 
     <style is:global>
       :root {
-        --color-primary: #1b365d; /* Academic deep navy */
-        --color-secondary: #8b263e; /* Academic burgundy / crimson */
-        --color-gold: #c29b38; /* Algerian Sahara golden accent */
-        --color-bg: #f8fafc;
+        --color-primary: #0a192f;      /* Deep Oxford / Navy */
+        --color-primary-light: #172a45;
+        --color-accent: #c29b38;       /* Saharan Gold / Bronze */
+        --color-accent-light: #fbf7ee;
+        --color-secondary: #8b263e;    /* Deep Crimson */
+        --color-bg: #f8fafc;           /* Light modern slate canvas */
         --color-surface: #ffffff;
         --color-text: #1e293b;
         --color-text-muted: #64748b;
         --color-border: #e2e8f0;
+        --color-border-subtle: #f1f5f9;
+        
+        --font-serif: 'Newsreader', Georgia, serif;
+        --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       }
 
       * {
@@ -69,119 +71,175 @@ const isRtl = lang === 'ar';
       body {
         background-color: var(--color-bg);
         color: var(--color-text);
-        font-family: -apple-system, BlinkMacSystemFont, "Cairo", "Segoe UI", Roboto, sans-serif;
-        line-height: 1.7;
+        font-family: var(--font-sans);
+        line-height: 1.65;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        -webkit-font-smoothing: antialiased;
       }
 
-      /* RTL Arabic Typography Enhancement */
-      html[dir="rtl"] body {
-        font-family: "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
-      }
-      
-      html[dir="ltr"] body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-      }
-
-      h1, h2, h3, h4 {
+      h1, h2, h3, .font-serif {
+        font-family: var(--font-serif);
         color: var(--color-primary);
-        line-height: 1.3;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
       }
 
       a {
         color: var(--color-primary);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: all 0.2s ease;
       }
 
       a:hover {
-        color: var(--color-secondary);
+        color: var(--color-accent);
       }
 
       .container {
-        max-width: 1150px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 0 1.25rem;
+        padding: 0 1.5rem;
         width: 100%;
       }
 
       main {
         flex: 1;
-        padding: 2.5rem 0;
+        padding: 2.5rem 0 4rem;
       }
 
-      .card {
+      /* Modern Minimalist Card */
+      .academic-card {
         background: var(--color-surface);
         border: 1px solid var(--color-border);
-        border-radius: 8px;
-        padding: 1.5rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        margin-bottom: 1.5rem;
+        border-radius: 12px;
+        padding: 1.75rem;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
       }
 
+      .academic-card:hover {
+        transform: translateY(-2px);
+        border-color: #cbd5e1;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      }
+
+      /* Badges */
       .badge {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
         padding: 0.25rem 0.65rem;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 600;
-        border-radius: 4px;
-        background: #e2e8f0;
-        color: #334155;
-      }
-
-      .badge-primary {
-        background: #e0e7ff;
-        color: #3730a3;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: 6px;
       }
 
       .badge-gold {
-        background: #fef3c7;
+        background: var(--color-accent-light);
         color: #92400e;
+        border: 1px solid #fde68a;
       }
 
+      .badge-navy {
+        background: #e2e8f0;
+        color: #0f172a;
+      }
+
+      .badge-crimson {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Buttons */
       .btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        font-weight: 500;
+        padding: 0.65rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border-radius: 8px;
         cursor: pointer;
-        font-size: 0.9rem;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         border: 1px solid transparent;
+        white-space: nowrap;
       }
 
       .btn-primary {
-        background-color: var(--color-primary);
-        color: white;
+        background: var(--color-primary);
+        color: #ffffff;
       }
 
       .btn-primary:hover {
-        background-color: #12243e;
-        color: white;
+        background: var(--color-primary-light);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(10, 25, 47, 0.15);
+      }
+
+      .btn-accent {
+        background: var(--color-accent);
+        color: #ffffff;
+      }
+
+      .btn-accent:hover {
+        background: #a8842c;
+        color: #ffffff;
       }
 
       .btn-outline {
         border-color: var(--color-border);
-        background: white;
+        background: #ffffff;
         color: var(--color-text);
       }
 
       .btn-outline:hover {
         border-color: var(--color-primary);
         color: var(--color-primary);
+        background: #f8fafc;
+      }
+
+      /* Page Header styling */
+      .page-header {
+        margin-bottom: 2.5rem;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 1.5rem;
+      }
+
+      .page-tag {
+        color: var(--color-accent);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+        display: block;
+      }
+
+      .page-title {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--color-primary);
+      }
+
+      .page-description {
+        font-size: 1.05rem;
+        color: var(--color-text-muted);
+        max-width: 780px;
+        margin-top: 0.5rem;
       }
     </style>
   </head>
   <body>
-    <Header currentLang={lang} />
+    <Header />
     <main>
       <div class="container">
         <slot />
       </div>
     </main>
-    <Footer currentLang={lang} />
+    <Footer />
   </body>
 </html>

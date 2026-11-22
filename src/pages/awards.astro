@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import awards from '../data/awards.json';
+---
+
+<Layout title="Academic Awards & Honors" description="Academic awards, excellence honors, and distinctions awarded to Prof. Dr. Tahar Abbou.">
+  <div class="page-header">
+    <span class="page-tag">Recognition</span>
+    <h1 class="page-title">Academic Prizes & Honors</h1>
+    <p class="page-description">
+      Formal academic honors, citations for research excellence, and university awards recognized by academic bodies and institutions.
+    </p>
+  </div>
+
+  <div class="awards-grid">
+    {awards.map((award) => (
+      <article class="academic-card award-card">
+        <div class="award-header">
+          <span class="badge badge-gold">Honored in {award.year}</span>
+        </div>
+
+        <h2 class="award-title">{award.title}</h2>
+        <p class="award-institution">🏛️ Awarding Body: <strong>{award.institution}</strong></p>
+        <p class="award-desc">{award.description}</p>
+
+        {award.image && (
+          <div class="award-certificate-frame">
+            <img src={award.image} alt={award.title} class="award-certificate-img" />
+          </div>
+        )}
+      </article>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .awards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 800px;
+  }
+
+  .award-card {
+    border-top: 4px solid var(--color-accent);
+  }
+
+  .award-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .award-title {
+    font-size: 1.65rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .award-institution {
+    font-size: 0.95rem;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .award-desc {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .award-certificate-frame {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  .award-certificate-img {
+    width: 100%;
+    display: block;
+    height: auto;
+  }
+</style>

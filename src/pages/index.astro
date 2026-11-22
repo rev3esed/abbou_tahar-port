@@ -1,7 +1,697 @@
 ---
-// Redirect root '/' to default language '/ar/'
+import Layout from '../layouts/Layout.astro';
+import profile from '../data/profile.json';
+import publications from '../data/publications.json';
+import courses from '../data/courses.json';
+
+// Top selected publications
+const featuredIds = [11, 13, 23, 24, 29];
+const featuredPubs = publications.filter(p => featuredIds.includes(p.id));
+
+// Primary course for quick access
+const primaryCourse = courses[0];
 ---
-<meta http-equiv="refresh" content="0;url=/ar/" />
-<script>
-  window.location.href = '/ar/';
-</script>
+
+<Layout title="Home">
+  <!-- ============================================================== -->
+  <!-- 1. HERO SECTION                                                -->
+  <!-- ============================================================== -->
+  <section class="hero-section">
+    <div class="hero-grid">
+      <!-- Left: Bio & Scholar Intro -->
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="badge badge-gold">Full Professor</span>
+          <span class="eyebrow-text">African Civilization • University of Adrar, Algeria</span>
+        </div>
+
+        <h1 class="hero-title">{profile.name}</h1>
+        <p class="hero-affiliation">{profile.affiliation}</p>
+
+        <p class="hero-bio">
+          {profile.bio}
+        </p>
+
+        <!-- Metrics Row -->
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-number">29+</span>
+            <span class="metric-label">Peer-Reviewed Publications</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">50+</span>
+            <span class="metric-label">Global & National Conferences</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">20+</span>
+            <span class="metric-label">Years University Teaching</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">WARA</span>
+            <span class="metric-label">Lifetime Member (Boston)</span>
+          </div>
+        </div>
+
+        <!-- Call-to-Action Buttons -->
+        <div class="hero-actions">
+          <a href="/publications" class="btn btn-primary">
+            Explore Publications
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="/uploads/cv-tahar-abbou.pdf" class="btn btn-outline" target="_blank" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Curriculum Vitae (PDF)
+          </a>
+          <a href="/teaching" class="btn btn-outline">
+            Course Materials
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Portrait Card -->
+      <div class="hero-portrait-col">
+        <div class="portrait-card">
+          <div class="portrait-img-wrapper">
+            <img src={profile.portrait_image} alt={profile.name} class="portrait-img" />
+          </div>
+          <div class="portrait-details">
+            <h3 class="portrait-name">{profile.name}</h3>
+            <p class="portrait-title">Ph.D. in African Civilization</p>
+            <div class="portrait-badges">
+              <span class="badge badge-navy">Director of CEIL</span>
+              <span class="badge badge-gold">PAM Researcher</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 2. RESEARCH PILLARS & FOCUS AREAS                              -->
+  <!-- ============================================================== -->
+  <section class="section-spacing">
+    <div class="section-intro">
+      <span class="page-tag">Scholarship</span>
+      <h2 class="section-heading">Research Focus & Academic Pillars</h2>
+      <p class="section-desc">Investigating West African civilizational history, trans-Saharan manuscript exchanges, and socioeconomic policy.</p>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="academic-card pillar-card">
+        <div class="pillar-icon">🏛️</div>
+        <h3 class="pillar-title">West African Empires</h3>
+        <p class="pillar-desc">
+          Historiographical inquiry into the ancient kingdoms of Wagadu (Ancient Ghana), the Mali Empire under Mansa Musa, and the Songhai state, analyzing sociopolitical resistance and state formation.
+        </p>
+      </div>
+
+      <div class="academic-card pillar-card">
+        <div class="pillar-icon">📜</div>
+        <h3 class="pillar-title">Trans-Saharan Manuscripts</h3>
+        <p class="pillar-desc">
+          Documenting and preserving the intellectual heritage of Timbuktu and Tuat oases through the Platform of Algerian Manuscripts in Africa (PAM) and the study of Imām al-Maghīlī's governance writings.
+        </p>
+      </div>
+
+      <div class="academic-card pillar-card">
+        <div class="pillar-icon">🌾</div>
+        <h3 class="pillar-title">Colonial Agrarian Policy</h3>
+        <p class="pillar-desc">
+          Economic history examining the shift from subsistence agriculture to cash-crop dependency in the Gold Coast (Ghana), British colonial welfare acts, and the 1807 abolition movement.
+        </p>
+      </div>
+
+      <div class="academic-card pillar-card">
+        <div class="pillar-icon">🗣️</div>
+        <h3 class="pillar-title">Saharan Cultural Expressions</h3>
+        <p class="pillar-desc">
+          Linguistic coexistence, Gurara Berber (Taznatit) oral literature, Ahellil poetry, and anthropological analyses of sacred pilgrimage traditions across North and West Africa.
+        </p>
+      </div>
+    </div>
+
+    <!-- Languages Spoken & Researched -->
+    <div class="languages-banner academic-card">
+      <span class="lang-banner-title">Spoken & Written Languages:</span>
+      <div class="lang-pills">
+        <span class="lang-pill">English</span>
+        <span class="lang-pill">Arabic</span>
+        <span class="lang-pill">French</span>
+        <span class="lang-pill">Gurara Berber (Taznatit)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 3. SELECTED PUBLICATIONS SPOTLIGHT                             -->
+  <!-- ============================================================== -->
+  <section class="section-spacing">
+    <div class="section-split-header">
+      <div>
+        <span class="page-tag">Bibliography</span>
+        <h2 class="section-heading">Selected Publications</h2>
+      </div>
+      <a href="/publications" class="view-all-btn">
+        View All 29 Publications
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <div class="publications-list">
+      {featuredPubs.map((pub) => (
+        <article class="academic-card pub-item">
+          <div class="pub-number">#{pub.id}</div>
+          <div class="pub-body">
+            <p class="pub-citation-text">{pub.raw}</p>
+            {pub.url && (
+              <a href={pub.url} target="_blank" rel="noopener noreferrer" class="pub-link-badge">
+                View Publication Source ↗
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 4. LATEST ANNOUNCEMENTS & PROCEEDINGS DOWNLOAD                 -->
+  <!-- ============================================================== -->
+  <section class="section-spacing">
+    <div class="announcement-banner academic-card">
+      <div class="announcement-content">
+        <span class="badge badge-gold">Special Announcement</span>
+        <h3 class="announcement-title">
+          Download the Proceedings of the Algiers International Conference
+        </h3>
+        <p class="announcement-desc">
+          <em>Imām Muḥammad b. ʿAbdul Karīm al-Maghīlī: Governance, Stability and Unity of African Societies</em> (Algiers, December 12th–13th, 2022). Access the official published proceedings volumes:
+        </p>
+        <div class="proceedings-links">
+          <a href="https://www.univ-adrar.edu.dz/wp-content/uploads/2024/01/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1-%D8%A7%D9%84%D8%A3%D9%88%D9%84-pdf.pdf" class="btn btn-outline" target="_blank" download>
+            📄 Volume 1 (PDF)
+          </a>
+          <a href="https://www.univ-adrar.edu.dz/wp-content/uploads/2024/01/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1-%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%8A-pdf.pdf" class="btn btn-outline" target="_blank" download>
+            📄 Volume 2 (PDF)
+          </a>
+          <a href="https://www.univ-adrar.edu.dz/wp-content/uploads/2024/01/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1-%D8%A7%D9%84%D8%AB%D8%A7%D9%84%D8%AB-pdf.pdf" class="btn btn-outline" target="_blank" download>
+            📄 Volume 3 (PDF)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 5. TEACHING & STUDENT DOWNLOAD HUB                             -->
+  <!-- ============================================================== -->
+  <section class="section-spacing">
+    <div class="section-split-header">
+      <div>
+        <span class="page-tag">Teaching</span>
+        <h2 class="section-heading">Course Materials & Exam Resources</h2>
+      </div>
+      <a href="/teaching" class="view-all-btn">
+        View All Courses & Syllabi
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <div class="teaching-preview-grid">
+      <div class="academic-card course-preview-card">
+        <div class="course-badge-row">
+          <span class="badge badge-navy">{primaryCourse.code}</span>
+          <span class="badge badge-gold">{primaryCourse.level} • {primaryCourse.semester}</span>
+        </div>
+        <h3 class="course-name">{primaryCourse.title}</h3>
+        <p class="course-dept">{primaryCourse.department} ({primaryCourse.period})</p>
+        <p class="course-summary">{primaryCourse.description}</p>
+        
+        <div class="resources-download-list">
+          <h4 class="resources-subtitle">Downloadable Exams & Handouts:</h4>
+          {primaryCourse.resources.map((res) => (
+            <a href={res.file} class="resource-download-pill" target="_blank" download>
+              <span class="res-icon">📥</span>
+              <span class="res-title">{res.title}</span>
+              <span class="res-fmt">{res.format}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============================================================== */
+  /* HERO STYLES                                                    */
+  /* ============================================================== */
+  .hero-section {
+    padding: 3.5rem 0 3rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 3.5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .eyebrow-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .hero-title {
+    font-size: 3.25rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  .hero-affiliation {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-bio {
+    font-size: 1.05rem;
+    color: #334155;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 2rem;
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-number {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin-top: 0.2rem;
+    line-height: 1.3;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Portrait Card */
+  .portrait-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 20px 40px -15px rgba(10, 25, 47, 0.08);
+  }
+
+  .portrait-img-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0a192f;
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .portrait-card:hover .portrait-img {
+    transform: scale(1.02);
+  }
+
+  .portrait-details {
+    padding: 1.25rem 0.5rem 0.5rem;
+    text-align: center;
+  }
+
+  .portrait-name {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .portrait-title {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.15rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .portrait-badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* ============================================================== */
+  /* GENERAL SECTIONS                                               */
+  /* ============================================================== */
+  .section-spacing {
+    margin-bottom: 4rem;
+  }
+
+  .section-intro {
+    margin-bottom: 2rem;
+  }
+
+  .section-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-top: 0.25rem;
+  }
+
+  .section-desc {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .section-split-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-primary);
+  }
+
+  .view-all-btn:hover {
+    color: var(--color-accent);
+  }
+
+  /* Pillars */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pillar-card {
+    border-top: 3px solid var(--color-primary);
+  }
+
+  .pillar-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* Languages Banner */
+  .languages-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-banner-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-primary);
+  }
+
+  .lang-pills {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-pill {
+    background: #f1f5f9;
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Publications Spotlight */
+  .publications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pub-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .pub-number {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    border: 1px solid #fde68a;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .pub-body {
+    flex: 1;
+  }
+
+  .pub-citation-text {
+    font-size: 0.975rem;
+    line-height: 1.65;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+
+  .pub-link-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: #f1f5f9;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+  }
+
+  .pub-link-badge:hover {
+    background: var(--color-primary);
+    color: #ffffff;
+  }
+
+  /* Announcement */
+  .announcement-banner {
+    background: linear-gradient(135deg, #0a192f 0%, #172a45 100%);
+    color: #ffffff;
+    border: none;
+    padding: 2.5rem;
+  }
+
+  .announcement-title {
+    color: #ffffff;
+    font-size: 1.65rem;
+    margin: 0.75rem 0;
+  }
+
+  .announcement-desc {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .proceedings-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .announcement-banner .btn-outline {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+  }
+
+  .announcement-banner .btn-outline:hover {
+    background: #ffffff;
+    color: var(--color-primary);
+  }
+
+  /* Teaching Hub */
+  .course-preview-card {
+    border-left: 4px solid var(--color-accent);
+  }
+
+  .course-badge-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .course-name {
+    font-size: 1.45rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .course-dept {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .course-summary {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .resources-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .resources-download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .resource-download-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .resource-download-pill:hover {
+    background: #ffffff;
+    border-color: var(--color-accent);
+    transform: translateX(4px);
+  }
+
+  .res-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex: 1;
+    margin-left: 0.5rem;
+  }
+
+  .res-fmt {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #e2e8f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .hero-portrait-col {
+      order: -1;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .hero-title {
+      font-size: 2.5rem;
+    }
+  }
+</style>

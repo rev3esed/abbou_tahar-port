@@ -1,28 +1,24 @@
 # ==============================================================
-# Wix to Astro Redirects & CMS Routing
-# Netlify _redirects file
-# ==============================================================
-
 # Decap CMS Admin Routing
+# ==============================================================
 /admin/*    /admin/index.html   200
 
-# Canonical domain redirect (non-www to www or vice versa)
-# http://abboutahar.com/*  https://www.abboutahar.com/:splat  301!
+# ==============================================================
+# Wix 301 Permanent Redirects (Preserving Citations & Search Rankings)
+# ==============================================================
+/blank-2                /publications       301
+/general-5              /conferences        301
+/general-5-1            /teaching           301
+/blank-1                /activities         301
+/usefull-links          /links              301
+/academic-prizes        /awards             301
+/courses                /teaching           301
+/courses-taught         /teaching           301
+/scientific-activities  /activities         301
+/photos                 /gallery            301
+/prizes                 /awards             301
 
-# --------------------------------------------------------------
-# Wix Old Page Mappings (Preserving Google citations & bookmarks)
-# --------------------------------------------------------------
-/publications           /ar/publications      301
-/publications/*         /ar/publications      301
-/conferences            /ar/conferences       301
-/scientific-activities  /ar/activities        301
-/courses-taught         /ar/courses           301
-/courses                /ar/courses           301
-/photos                 /ar/photos            301
-/useful-links           /ar/links             301
-/academic-prizes        /ar/prizes            301
-/about                  /ar/                  301
-/contact                /ar/                  301
-
-# Default root route to Arabic homepage
-/                       /ar/                  302
+# Canonical redirects
+/ar/*                   /                   301
+/fr/*                   /                   301
+/en/*                   /                   301

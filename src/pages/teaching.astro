@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import courses from '../data/courses.json';
+---
+
+<Layout title="Courses Taught & Teaching" description="Courses, syllabi, mock tests, and exams taught by Prof. Dr. Tahar Abbou at the University of Adrar.">
+  <div class="page-header">
+    <span class="page-tag">Pedagogy & Curriculum</span>
+    <h1 class="page-title">Courses Taught & Student Resources</h1>
+    <p class="page-description">
+      Academic modules, graduate seminars, and downloadable examination resources across undergraduate (Licence), graduate (Master), and doctoral programs.
+    </p>
+  </div>
+
+  <div class="courses-feed">
+    {courses.map((course) => (
+      <article class="academic-card course-item-card">
+        <div class="course-top-badges">
+          <span class="badge badge-navy">{course.code}</span>
+          <span class="badge badge-gold">{course.level}</span>
+          <span class="badge badge-navy">{course.semester}</span>
+          <span class="course-years-badge">{course.period}</span>
+        </div>
+
+        <h2 class="course-item-title">{course.title}</h2>
+        <p class="course-item-dept">{course.department}</p>
+        <p class="course-item-description">{course.description}</p>
+
+        {course.resources && course.resources.length > 0 && (
+          <div class="resources-block">
+            <h3 class="resources-heading">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Downloadable Examination & Study Handouts:
+            </h3>
+
+            <div class="downloads-grid">
+              {course.resources.map((res) => (
+                <a href={res.file} class="download-card-link" target="_blank" download>
+                  <div class="download-info">
+                    <span class="download-title">{res.title}</span>
+                    <span class="download-type">{res.type}</span>
+                  </div>
+                  <span class="download-btn-pill">
+                    Download {res.format} ↓
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </article>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .courses-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .course-item-card {
+    border-top: 4px solid var(--color-primary);
+  }
+
+  .course-top-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .course-years-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-left: auto;
+  }
+
+  .course-item-title {
+    font-size: 1.6rem;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .course-item-dept {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  .course-item-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1.5rem;
+  }
+
+  .resources-block {
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .resources-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+  }
+
+  .downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .download-card-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .download-card-link:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  }
+
+  .download-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .download-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .download-type {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .download-btn-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: #e2e8f0;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+</style>

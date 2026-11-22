@@ -1,0 +1,88 @@
+[
+  {
+    "id": "gr1-l1-s2",
+    "code": "GR1",
+    "title": "Grammar (GR1) - First Year Licence",
+    "level": "Licence 1 (L1)",
+    "semester": "Semester 2 (S2)",
+    "period": "2003 - Present",
+    "department": "Department of English, University of Adrar",
+    "description": "Comprehensive study of foundational English grammatical structures, syntax, and sentence mechanics for undergraduate students in English studies.",
+    "resources": [
+      {
+        "title": "Mock Test 1 (Semester 2)",
+        "file": "/uploads/mock-test-1.pdf",
+        "format": "PDF",
+        "type": "Exam Preparation"
+      },
+      {
+        "title": "Mock Test 2 (Semester 2)",
+        "file": "/uploads/mock-test-2.pdf",
+        "format": "PDF",
+        "type": "Exam Preparation"
+      },
+      {
+        "title": "Tests 1 & 2 with Full Answer Keys",
+        "file": "/uploads/tests-1-2-key.pdf",
+        "format": "PDF",
+        "type": "Solutions & Key"
+      },
+      {
+        "title": "Mock Final Exam L1 S2",
+        "file": "/uploads/mock-exam-l1-s2.pdf",
+        "format": "PDF",
+        "type": "Final Exam Practice"
+      },
+      {
+        "title": "Official Exam Model Answers",
+        "file": "/uploads/answers-l1-s2.pdf",
+        "format": "PDF",
+        "type": "Model Answers"
+      }
+    ]
+  },
+  {
+    "id": "british-empire-m1",
+    "code": "ENG-M1",
+    "title": "The British Empire & Colonial Rule",
+    "level": "Master 1 (M1)",
+    "semester": "Annual / S1",
+    "period": "2021 - Present",
+    "department": "Department of English, University of Adrar",
+    "description": "Advanced graduate seminar analyzing the rise, institutional apparatus, and decolonization of the British Empire, with specialized modules on British colonial economic policy in the Gold Coast (Ghana) and the 1807 Abolition Act.",
+    "resources": []
+  },
+  {
+    "id": "african-civilization-grad",
+    "code": "AF.Civ.4",
+    "title": "African Civilization & Historiography",
+    "level": "Fourth-Year Graduation / Master",
+    "semester": "S1 & S2",
+    "period": "2006 - 2011",
+    "department": "Department of English & Human Sciences",
+    "description": "Historical exploration of West African medieval kingdoms (Ancient Ghana, Mali Empire, Songhai Empire), trans-Saharan caravan routes, and manuscript repositories in Timbuktu and Tuat.",
+    "resources": []
+  },
+  {
+    "id": "esp-doctorate",
+    "code": "ESP-PHD",
+    "title": "English for Specific Purposes (ESP) for Doctoral Researchers",
+    "level": "Doctorate (Ph.D.)",
+    "semester": "Annual",
+    "period": "2016 - 2021",
+    "department": "Department of Human Sciences (Mediaeval History & Psychology)",
+    "description": "Academic English writing, international conference presentation skills, and scholarly paper publishing methodology for doctoral candidates in Medieval History and Psychology.",
+    "resources": []
+  },
+  {
+    "id": "ufc-programs",
+    "code": "UFC",
+    "title": "Open University (Université de la Formation Continue - UFC)",
+    "level": "Undergraduate (Licence 1 - S1 & S2)",
+    "semester": "S1 & S2",
+    "period": "2002 - Present",
+    "department": "Continuing Education Center, Adrar",
+    "description": "Teaching modules in Human and Social Sciences, General English, Psychopedagogy, and Banking English.",
+    "resources": []
+  }
+]

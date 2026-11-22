@@ -1,0 +1,44 @@
+[
+  {
+    "id": "gallery-1",
+    "image": "/images/gallery-1.jpg",
+    "title": "International Conference Presentation",
+    "event": "Scholarly Symposium on West African History and Trans-Saharan Routes",
+    "caption": "Prof. Tahar Abbou delivering his research paper before international delegates and colleagues."
+  },
+  {
+    "id": "gallery-2",
+    "image": "/images/gallery-2.jpg",
+    "title": "Keynote Address on Medieval African Empires",
+    "event": "Academic Forum on African Civilizations",
+    "caption": "Presenting insights on Mansa Musa's pilgrimage and the manuscript tradition of Timbuktu."
+  },
+  {
+    "id": "gallery-3",
+    "image": "/images/gallery-3.jpg",
+    "title": "Faculty & Conference Delegates",
+    "event": "University Ahmed Draia - Academic Session",
+    "caption": "Collegiate exchange and discussions with fellow faculty members and researchers."
+  },
+  {
+    "id": "gallery-4",
+    "image": "/images/gallery-4.jpg",
+    "title": "Academic Workshop on Manuscripts",
+    "event": "Laboratory of Algerian Manuscripts in Africa",
+    "caption": "Research fieldwork session on historical manuscripts and archival documentation."
+  },
+  {
+    "id": "gallery-5",
+    "image": "/images/gallery-5.jpg",
+    "title": "International Symposium Panel",
+    "event": "Global Pilgrimage & Heritage Conference",
+    "caption": "Chairs and panelists discussing sacred journeys and West African cultural resistance."
+  },
+  {
+    "id": "gallery-6",
+    "image": "/images/gallery-6.jpg",
+    "title": "Official University Ceremony",
+    "event": "Scientific Council & University Commemoration",
+    "caption": "Academic gathering at the University of Adrar recognizing faculty scholarly contributions."
+  }
+]

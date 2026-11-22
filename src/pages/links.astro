@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import links from '../data/links.json';
+---
+
+<Layout title="Useful Academic Links" description="Curated academic repositories, journal portals, and manuscript databases recommended by Prof. Dr. Tahar Abbou.">
+  <div class="page-header">
+    <span class="page-tag">Resources & Repositories</span>
+    <h1 class="page-title">Useful Academic Links</h1>
+    <p class="page-description">
+      Essential scholarly platforms, digital manuscript archives, international associations, and university portals in African and Saharan research.
+    </p>
+  </div>
+
+  <div class="links-grid">
+    {links.map((link) => (
+      <a href={link.url} target="_blank" rel="noopener noreferrer" class="academic-card link-item-card">
+        <div class="link-item-top">
+          <span class="badge badge-navy">{link.category}</span>
+          <span class="link-arrow-icon">↗</span>
+        </div>
+
+        <h2 class="link-item-title">{link.title}</h2>
+        <p class="link-item-desc">{link.description}</p>
+        
+        <span class="link-item-url">{link.url}</span>
+      </a>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .link-item-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border-left: 4px solid var(--color-primary);
+  }
+
+  .link-item-card:hover {
+    border-left-color: var(--color-accent);
+  }
+
+  .link-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .link-arrow-icon {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .link-item-title {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .link-item-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .link-item-url {
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    word-break: break-all;
+  }
+</style>
