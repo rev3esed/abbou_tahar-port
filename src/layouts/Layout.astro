@@ -232,6 +232,19 @@ const {
         margin-top: 0.5rem;
       }
     </style>
+    <!-- Netlify Identity Widget for authentication / invite acceptance -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </head>
   <body>
     <Header />
