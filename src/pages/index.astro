@@ -186,7 +186,7 @@ const primaryCourse = allCourses.find(c => c.data.code === 'GR1')?.data || allCo
     <div class="publications-list">
       {featuredPubs.map((pub) => (
         <article class="academic-card pub-item">
-          {pub.id > 0 && <div class="pub-number">#{pub.id}</div>}
+          <div class="pub-year-badge">{pub.year}</div>
           <div class="pub-body">
             <p class="pub-citation-text">{pub.raw}</p>
             {pub.url && (
@@ -540,16 +540,15 @@ const primaryCourse = allCourses.find(c => c.data.code === 'GR1')?.data || allCo
     align-items: flex-start;
   }
 
-  .pub-number {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
+  .pub-year-badge {
+    font-size: 0.85rem;
     font-weight: 700;
-    color: var(--color-accent);
-    background: var(--color-accent-light);
-    border: 1px solid #fde68a;
-    padding: 0.2rem 0.6rem;
+    color: #ffffff;
+    background: var(--color-primary);
+    padding: 0.25rem 0.65rem;
     border-radius: 6px;
     flex-shrink: 0;
+    letter-spacing: 0.04em;
   }
 
   .pub-body {

@@ -1,7 +1,7 @@
 ﻿---
 id: 6
 title: "The Ten-Year Plan: The First Stages towards the Economic Dependency in the Gold Coast (1919-1929)"
-year: 1919
+year: 2013
 url: "https://www.asjp.cerist.dz/en/article/36080"
 authors: "Prof. Dr. Tahar Abbou"
 ---

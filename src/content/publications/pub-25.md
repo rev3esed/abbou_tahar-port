@@ -1,7 +1,7 @@
 ﻿---
 id: 25
 title: "المقاومة الثقافية في غرب افريقيا – الشيخ الحاج مالك سي (1853-1922م) أنموذجا"
-year: 1922
+year: 2023
 url: "https://www.asjp.cerist.dz/en/article/236431"
 authors: "Prof. Dr. Tahar Abbou"
 ---
