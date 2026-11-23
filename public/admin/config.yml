@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: rev3esed/abbou_tahar-port
   branch: main
 
 # Where uploaded files (PDFs, PPTs, images) are stored in the repository
