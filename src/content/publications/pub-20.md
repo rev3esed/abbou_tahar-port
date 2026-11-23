@@ -1,4 +1,4 @@
-﻿---
+---
 id: 20
 title: "Political and Intellectual Resistance in West Africa – Shaykh Hamahoullah as an Example (1910-1943)"
 year: 2022

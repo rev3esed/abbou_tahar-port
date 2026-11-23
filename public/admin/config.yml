@@ -99,6 +99,14 @@ collections:
     fields:
       - { label: "Paper / Conference Title", name: "title", widget: "string" }
       - { label: "Year", name: "year", widget: "number", value_type: "int" }
+      - label: "Scope"
+        name: "scope"
+        widget: "select"
+        options:
+          - { label: "National (Algeria)", value: "national" }
+          - { label: "International (Abroad)", value: "international" }
+        default: "national"
+      - { label: "Location / Country", name: "location", widget: "string", required: false }
       - { label: "Conference Details & Abstract", name: "body", widget: "markdown" }
 
   # -------------------------------------------------------------

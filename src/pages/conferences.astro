@@ -7,11 +7,15 @@ const conferences = confEntries
   .map(c => {
     const titleText = c.body?.trim() || c.data.title;
     const isArabic = /[\u0600-\u06FF]/.test(titleText);
-    const isInternational = /(USA|UK|France|Italy|Belgium|Spain|Tunisia|UAE|Dubai|Canada|Montreal|Oxford|Harvard|Philippines|Manila|Nigeria|Kano|London|Rome|Paris|Austin|Monastir|Leuven|British|Zayed|Monnet|Mansfield|Concordia)/i.test(titleText);
+    const scope = (c.data.scope as 'national' | 'international') || 'national';
+    const isInternational = scope === 'international';
+    const location = c.data.location || (isInternational ? 'International' : 'Algeria');
     return {
       id: c.data.id || 0,
       title: titleText,
       year: c.data.year,
+      scope,
+      location,
       isArabic,
       isInternational,
     };
@@ -31,7 +35,7 @@ const countNational = conferences.filter(c => !c.isInternational).length;
     <span class="page-tag">Academic Presentations</span>
     <h1 class="page-title">Conferences & Symposiums</h1>
     <p class="page-description">
-      Chronological index of 50 national and international conferences, keynote addresses, and academic study days delivered at leading universities and research institutes across Europe, North America, the Middle East, Africa, and Algeria.
+      Chronological index of 50 national and international conferences, keynote addresses, and academic study days delivered at leading universities across Europe, North America, the Middle East, Africa, and Algeria.
     </p>
   </div>
 
@@ -48,7 +52,7 @@ const countNational = conferences.filter(c => !c.isInternational).length;
           <input 
             type="text" 
             id="confSearch" 
-            placeholder="Search by topic, host university, country, city, or year..." 
+            placeholder="Search by topic, university, host country, city, or year..." 
             autocomplete="off"
           />
           <button type="button" id="clearSearch" class="clear-search-btn" title="Clear search" aria-label="Clear search">×</button>
@@ -63,14 +67,14 @@ const countNational = conferences.filter(c => !c.isInternational).length;
 
       <!-- Quick Filter Pills -->
       <div class="filter-pills-row">
-        <span class="filter-pills-label">Filter:</span>
+        <span class="filter-pills-label">Scope & Era:</span>
         <div class="pills-group" id="filterPills">
           <button type="button" class="pill active" data-filter="all">All ({conferences.length})</button>
+          <button type="button" class="pill pill-intl" data-filter="intl">🌍 International ({countInternational})</button>
+          <button type="button" class="pill pill-natl" data-filter="natl">🏛️ National / Algeria ({countNational})</button>
           <button type="button" class="pill" data-filter="2020s">2020 – 2024 ({countRecent})</button>
           <button type="button" class="pill" data-filter="2015s">2015 – 2019 ({countMid})</button>
           <button type="button" class="pill" data-filter="2000s">2009 – 2014 ({countEarly})</button>
-          <button type="button" class="pill pill-intl" data-filter="intl">🌍 International ({countInternational})</button>
-          <button type="button" class="pill" data-filter="natl">🏛️ Algeria / National ({countNational})</button>
         </div>
       </div>
     </div>
@@ -83,16 +87,17 @@ const countNational = conferences.filter(c => !c.isInternational).length;
         class="academic-card conf-card" 
         data-year={conf.year}
         data-intl={conf.isInternational ? "true" : "false"}
-        data-search={conf.title.toLowerCase()}
+        data-search={`${conf.title} ${conf.location}`.toLowerCase()}
       >
         <div class="conf-card-top">
           <div class="conf-badges">
             <span class="badge badge-year">{conf.year}</span>
             {conf.isInternational ? (
-              <span class="badge badge-intl">🌍 International Conference</span>
+              <span class="badge badge-intl">🌍 International</span>
             ) : (
-              <span class="badge badge-natl">🏛️ National Symposium</span>
+              <span class="badge badge-natl">🏛️ National (Algeria)</span>
             )}
+            <span class="badge badge-location">📍 {conf.location}</span>
             {conf.isArabic && <span class="badge badge-arabic">Arabic / عربي</span>}
           </div>
         </div>
@@ -123,7 +128,7 @@ const countNational = conferences.filter(c => !c.isInternational).length;
   <div class="empty-state" id="emptyState" style="display: none;">
     <div class="empty-icon">🎤</div>
     <h3>No matching presentations found</h3>
-    <p>Try searching for a different keyword, host university, country, or clear your current filters.</p>
+    <p>Try searching for a different keyword, host university, country, or reset your current filters.</p>
     <button type="button" class="btn btn-primary" id="resetFiltersBtn">Reset All Filters</button>
   </div>
 </Layout>
@@ -150,16 +155,16 @@ const countNational = conferences.filter(c => !c.isInternational).length;
 
       // Check Pill Filter
       let matchesPill = true;
-      if (activeFilter === '2020s') {
+      if (activeFilter === 'intl') {
+        matchesPill = isIntl;
+      } else if (activeFilter === 'natl') {
+        matchesPill = !isIntl;
+      } else if (activeFilter === '2020s') {
         matchesPill = year >= 2020;
       } else if (activeFilter === '2015s') {
         matchesPill = year >= 2015 && year <= 2019;
       } else if (activeFilter === '2000s') {
         matchesPill = year < 2015;
-      } else if (activeFilter === 'intl') {
-        matchesPill = isIntl;
-      } else if (activeFilter === 'natl') {
-        matchesPill = !isIntl;
       }
 
       // Check Search Query
@@ -397,6 +402,16 @@ const countNational = conferences.filter(c => !c.isInternational).length;
     box-shadow: 0 2px 6px rgba(10, 25, 47, 0.18);
   }
 
+  .pill-intl.active {
+    background: #1e40af;
+    border-color: #1e40af;
+  }
+
+  .pill-natl.active {
+    background: #0f766e;
+    border-color: #0f766e;
+  }
+
   /* Conferences Timeline & Cards */
   .conferences-timeline {
     display: flex;
@@ -432,7 +447,7 @@ const countNational = conferences.filter(c => !c.isInternational).length;
   }
 
   .badge-year {
-    background: #92400e;
+    background: var(--color-primary);
     color: #ffffff;
     font-weight: 700;
     font-size: 0.825rem;
@@ -445,12 +460,23 @@ const countNational = conferences.filter(c => !c.isInternational).length;
     background: #eff6ff;
     color: #1e40af;
     border: 1px solid #bfdbfe;
+    font-weight: 700;
   }
 
   .badge-natl {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    font-weight: 700;
+  }
+
+  .badge-location {
     background: #f8fafc;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .badge-arabic {

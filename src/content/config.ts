@@ -18,6 +18,8 @@ const conferences = defineCollection({
     id: z.number().optional(),
     title: z.string(),
     year: z.number(),
+    scope: z.enum(['national', 'international']).default('national'),
+    location: z.string().optional(),
   }),
 });
 

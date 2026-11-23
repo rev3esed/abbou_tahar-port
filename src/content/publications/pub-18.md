@@ -1,4 +1,4 @@
-﻿---
+---
 id: 18
 title: "The Contribution of Ulad Sidi Shaykh to the Movements of Resistance in Algeria (1845-1908)"
 year: 2022

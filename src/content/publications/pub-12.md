@@ -1,4 +1,4 @@
-﻿---
+---
 id: 12
 title: "The Shift from Subsistence Economy to Cash Crop Economy in the Gold Coast (1870-1920)"
 year: 2017
