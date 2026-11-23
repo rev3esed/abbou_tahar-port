@@ -1,14 +1,10 @@
 {
-  "name": "Prof. Dr. Tahar Abbou",
-  "name_ar": "أ.د. الطاهر عبو",
+  "name": "Prof. Tahar Abbou",
+  "name_ar": "أ. الطاهر عبو",
   "title": "Full Professor of African Civilization",
   "affiliation": "Faculty of Arts and Languages, Ahmed Draia University of Adrar, Algeria",
-  "secondary_roles": [
-    "Head of the Intensive Language Center (CEIL), University of Adrar",
-    "Lifetime Member of the West African Research Association (WARA), Boston University",
-    "Senior Researcher, Laboratory of Algerian Manuscripts in West Africa (RUFUF / PAM)",
-    "Member of the Scientific Council of the National Centre of Manuscripts"
-  ],
+  "portrait_image": "/images/profile-portrait.jpg",
+  "cv_pdf": "/uploads/cv-tahar-abbou.pdf",
   "email": "tahar.abbou@univ-adrar.edu.dz",
   "secondary_email": "abboutahar7@gmail.com",
   "whatsapp": [
@@ -16,14 +12,7 @@
     "+213 662 086 479"
   ],
   "address": "Ahmed Draia University of Adrar, Route Nationale N° 06, Adrar 01000, Algeria",
-  "cv_pdf": "/uploads/cv-tahar-abbou.pdf",
-  "portrait_image": "/images/profile-portrait.jpg",
-  "languages": [
-    "English (Fluent / Academic)",
-    "Arabic (Native / Scholarly)",
-    "French (Fluent / Academic)",
-    "Gurara Berber / Taznatit (Spoken & Researched)"
-  ],
+  "bio": "Prof. Dr. Tahar Abbou is a Full Professor of African Civilization at Ahmed Draia University of Adrar, Algeria. He holds a Ph.D. in African Civilization and has dedicated over two decades to researching West African medieval empires, trans-Saharan cultural and commercial linkages, colonial socioeconomic history, and Saharan manuscript traditions. A Lifetime Member of the West African Research Association (WARA) at Boston University, Dr. Abbou is also a prominent researcher at the Platform of Algerian Manuscripts in Africa (PAM) and serves as the Director of the Intensive Language Center (CEIL) at the University of Adrar.",
   "research_interests": [
     "African Civilization & Western Sahel Kingdoms",
     "Ancient Ghana, Mali & Songhai Empires",
@@ -33,11 +22,22 @@
     "Ahellil of Gurara & Berber Oral Traditions",
     "Slavery, Abolition & West African Resistance"
   ],
-  "bio": "Prof. Dr. Tahar Abbou is a Full Professor of African Civilization at Ahmed Draia University of Adrar, Algeria. He holds a Ph.D. in African Civilization and has dedicated over two decades to researching West African medieval empires, trans-Saharan cultural and commercial linkages, colonial socioeconomic history, and Saharan manuscript traditions. A Lifetime Member of the West African Research Association (WARA) at Boston University, Dr. Abbou is also a prominent researcher at the Platform of Algerian Manuscripts in Africa (PAM) and serves as the Director of the Intensive Language Center (CEIL) at the University of Adrar.",
+  "languages": [
+    "English (Fluent / Academic)",
+    "Arabic (Native / Scholarly)",
+    "French (Fluent / Academic)",
+    "Gurara Berber / Taznatit (Spoken & Researched)"
+  ],
   "links": {
+    "asjp": "https://www.asjp.cerist.dz",
     "google_scholar": "https://scholar.google.com/citations?user=example",
     "orcid": "https://orcid.org",
-    "researchgate": "https://www.researchgate.net/profile/Tahar-Abbou",
-    "asjp": "https://www.asjp.cerist.dz"
-  }
+    "researchgate": "https://www.researchgate.net/profile/Tahar-Abbou"
+  },
+  "secondary_roles": [
+    "Head of the Intensive Language Center (CEIL), University of Adrar",
+    "Lifetime Member of the West African Research Association (WARA), Boston University",
+    "Senior Researcher, Laboratory of Algerian Manuscripts in West Africa (RUFUF / PAM)",
+    "Member of the Scientific Council of the National Centre of Manuscripts"
+  ]
 }
