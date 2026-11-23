@@ -3,16 +3,15 @@ backend:
   repo: rev3esed/abbou_tahar-port
   branch: main
 
-# Where uploaded files (PDFs, PPTs, images) are stored in the repository
+# Upload location for new PDFs, slides, and images
 media_folder: "public/uploads"
-# How files are referenced in the HTML
 public_folder: "/uploads"
 
 locale: "en"
 
 collections:
   # -------------------------------------------------------------
-  # 1. PROFILE & BIO SETTINGS
+  # 1. PROFILE & BIO
   # -------------------------------------------------------------
   - name: "profile"
     label: "Profile & Bio"
@@ -22,96 +21,130 @@ collections:
         name: "about"
         fields:
           - { label: "Full Name", name: "name", widget: "string" }
+          - { label: "Arabic Name", name: "name_ar", widget: "string", required: false }
           - { label: "Academic Title", name: "title", widget: "string" }
           - { label: "Affiliation", name: "affiliation", widget: "string" }
           - { label: "Profile Portrait Photo", name: "portrait_image", widget: "image" }
           - { label: "Curriculum Vitae (PDF)", name: "cv_pdf", widget: "file" }
-          - { label: "Primary Email", name: "email", widget: "string" }
+          - { label: "Primary Academic Email", name: "email", widget: "string" }
           - { label: "Secondary Email", name: "secondary_email", widget: "string", required: false }
-          - { label: "WhatsApp Contacts", name: "whatsapp", widget: "list" }
-          - { label: "Office Location", name: "address", widget: "string" }
-          - { label: "Biography", name: "bio", widget: "text" }
+          - { label: "WhatsApp Contact Numbers", name: "whatsapp", widget: "list" }
+          - { label: "Office Address", name: "address", widget: "string" }
+          - { label: "Academic Biography", name: "bio", widget: "text" }
           - { label: "Research Interests", name: "research_interests", widget: "list" }
           - { label: "Languages", name: "languages", widget: "list" }
 
   # -------------------------------------------------------------
-  # 2. PUBLICATIONS
+  # 2. PUBLICATIONS (FOLDER COLLECTION - INDIVIDUAL PAPERS)
   # -------------------------------------------------------------
   - name: "publications"
     label: "Publications"
-    files:
-      - file: "src/data/publications.json"
-        label: "Publications Bibliography"
-        name: "pub_list"
-        fields:
-          - label: "Articles, Books & Chapters"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Number / ID", name: "id", widget: "number" }
-              - { label: "Citation & Details", name: "raw", widget: "text" }
-              - { label: "External Link / DOI / ASJP", name: "url", widget: "string", required: false }
+    label_singular: "Publication"
+    folder: "src/content/publications"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ({{year}})"
+    sortable_fields: ["year", "title"]
+    view_filters:
+      - label: "Recent (2020+)"
+        field: "year"
+        pattern: "202[0-9]"
+    fields:
+      - { label: "Publication Title", name: "title", widget: "string" }
+      - { label: "Publication Year", name: "year", widget: "number", value_type: "int" }
+      - { label: "External Link / DOI / ASJP", name: "url", widget: "string", required: false }
+      - { label: "Authors", name: "authors", widget: "string", default: "Prof. Dr. Tahar Abbou" }
+      - { label: "Featured on Homepage?", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Full Citation & Abstract", name: "body", widget: "markdown" }
 
   # -------------------------------------------------------------
-  # 3. COURSES & TEACHING
+  # 3. COURSES & TEACHING (FOLDER COLLECTION)
   # -------------------------------------------------------------
   - name: "courses"
     label: "Courses & Teaching"
-    files:
-      - file: "src/data/courses.json"
-        label: "Teaching Courses & Materials"
-        name: "course_list"
+    label_singular: "Course"
+    folder: "src/content/courses"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{code}}: {{title}} ({{level}})"
+    fields:
+      - { label: "Course Code", name: "code", widget: "string" }
+      - { label: "Course Title", name: "title", widget: "string" }
+      - { label: "Academic Level", name: "level", widget: "string" }
+      - { label: "Semester", name: "semester", widget: "string" }
+      - { label: "Period / Academic Year", name: "period", widget: "string" }
+      - { label: "Department", name: "department", widget: "string" }
+      - { label: "Course Description & Objectives", name: "description", widget: "text" }
+      - label: "Downloadable Exams, Tests & Lecture Notes"
+        name: "resources"
+        widget: "list"
+        required: false
         fields:
-          - label: "Courses"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Course Code", name: "code", widget: "string" }
-              - { label: "Course Title", name: "title", widget: "string" }
-              - { label: "Academic Level", name: "level", widget: "string" }
-              - { label: "Semester", name: "semester", widget: "string" }
-              - { label: "Period", name: "period", widget: "string" }
-              - { label: "Department", name: "department", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - label: "Downloadable Files & Exams"
-                name: "resources"
-                widget: "list"
-                fields:
-                  - { label: "Title", name: "title", widget: "string" }
-                  - { label: "File (PDF/PPT)", name: "file", widget: "file" }
-                  - { label: "Format", name: "format", widget: "string", default: "PDF" }
-                  - { label: "Type", name: "type", widget: "string", default: "Exam Preparation" }
+          - { label: "File Title / Label", name: "title", widget: "string" }
+          - { label: "File (PDF/PPT/DOC)", name: "file", widget: "file" }
+          - { label: "Format", name: "format", widget: "string", default: "PDF" }
+          - { label: "Type", name: "type", widget: "string", default: "Exam Preparation" }
 
   # -------------------------------------------------------------
-  # 4. CONFERENCES
+  # 4. CONFERENCES (FOLDER COLLECTION)
   # -------------------------------------------------------------
   - name: "conferences"
     label: "Conferences"
-    files:
-      - file: "src/data/conferences.json"
-        label: "Conference Presentations"
-        name: "conf_list"
-        fields:
-          - label: "Conferences List"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "ID", name: "id", widget: "number" }
-              - { label: "Paper & Conference Title", name: "title", widget: "text" }
-              - { label: "Year", name: "year", widget: "number" }
+    label_singular: "Conference"
+    folder: "src/content/conferences"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{year}}: {{title}}"
+    sortable_fields: ["year"]
+    fields:
+      - { label: "Paper / Conference Title", name: "title", widget: "string" }
+      - { label: "Year", name: "year", widget: "number", value_type: "int" }
+      - { label: "Conference Details & Abstract", name: "body", widget: "markdown" }
 
   # -------------------------------------------------------------
-  # 5. SCIENTIFIC ACTIVITIES
+  # 5. PHOTO GALLERY (FOLDER COLLECTION)
+  # -------------------------------------------------------------
+  - name: "gallery"
+    label: "Photo Gallery"
+    label_singular: "Photo"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} - {{event}}"
+    fields:
+      - { label: "Photo Image", name: "image", widget: "image" }
+      - { label: "Photo Title", name: "title", widget: "string" }
+      - { label: "Academic Event / Occasion", name: "event", widget: "string" }
+      - { label: "Caption / Description", name: "caption", widget: "string" }
+
+  # -------------------------------------------------------------
+  # 6. USEFUL LINKS (FOLDER COLLECTION)
+  # -------------------------------------------------------------
+  - name: "links"
+    label: "Useful Links"
+    label_singular: "Link"
+    folder: "src/content/links"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ({{category}})"
+    fields:
+      - { label: "Resource Title", name: "title", widget: "string" }
+      - { label: "Website URL", name: "url", widget: "string" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+
+  # -------------------------------------------------------------
+  # 7. SCIENTIFIC ACTIVITIES
   # -------------------------------------------------------------
   - name: "activities"
     label: "Scientific Activities"
     files:
       - file: "src/data/activities.json"
-        label: "Research Projects & Councils"
-        name: "act_list"
+        label: "Research Projects & PRFU Teams"
+        name: "act_data"
         fields:
-          - label: "Activity Categories"
-            name: "items"
+          - label: "Categories"
+            name: "categories"
             widget: "list"
             fields:
               - { label: "Category Name", name: "category", widget: "string" }
@@ -123,41 +156,3 @@ collections:
                   - { label: "Role", name: "role", widget: "string" }
                   - { label: "Institution / Director", name: "institution", widget: "string", required: false }
                   - { label: "URL", name: "url", widget: "string", required: false }
-
-  # -------------------------------------------------------------
-  # 6. PHOTO GALLERY
-  # -------------------------------------------------------------
-  - name: "gallery"
-    label: "Photo Gallery"
-    files:
-      - file: "src/data/gallery.json"
-        label: "Photos"
-        name: "gallery_list"
-        fields:
-          - label: "Gallery Photos"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Image", name: "image", widget: "image" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Event", name: "event", widget: "string" }
-              - { label: "Caption", name: "caption", widget: "string" }
-
-  # -------------------------------------------------------------
-  # 7. USEFUL LINKS
-  # -------------------------------------------------------------
-  - name: "links"
-    label: "Useful Links"
-    files:
-      - file: "src/data/links.json"
-        label: "Academic Links"
-        name: "links_list"
-        fields:
-          - label: "Links"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
-              - { label: "Category", name: "category", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }

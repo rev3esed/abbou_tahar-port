@@ -1,0 +1,32 @@
+﻿---
+code: "GR1"
+title: "Grammar (GR1) - First Year Licence"
+level: "Licence 1 (L1)"
+semester: "Semester 2 (S2)"
+period: "2003 - Present"
+department: "Department of English, University of Adrar"
+description: "Comprehensive study of foundational English grammatical structures, syntax, and sentence mechanics for undergraduate students in English studies."
+resources:
+  - title: "Mock Test 1 (Semester 2)"
+    file: "/uploads/mock-test-1.pdf"
+    format: "PDF"
+    type: "Exam Preparation"
+  - title: "Mock Test 2 (Semester 2)"
+    file: "/uploads/mock-test-2.pdf"
+    format: "PDF"
+    type: "Exam Preparation"
+  - title: "Tests 1 & 2 with Full Answer Keys"
+    file: "/uploads/tests-1-2-key.pdf"
+    format: "PDF"
+    type: "Solutions & Key"
+  - title: "Mock Final Exam L1 S2"
+    file: "/uploads/mock-exam-l1-s2.pdf"
+    format: "PDF"
+    type: "Final Exam Practice"
+  - title: "Official Exam Model Answers"
+    file: "/uploads/answers-l1-s2.pdf"
+    format: "PDF"
+    type: "Model Answers"
+---
+
+Comprehensive study of foundational English grammatical structures, syntax, and sentence mechanics for undergraduate students in English studies.

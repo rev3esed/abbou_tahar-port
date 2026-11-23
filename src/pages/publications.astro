@@ -1,6 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import publications from '../data/publications.json';
+import { getCollection } from 'astro:content';
+
+const pubEntries = await getCollection('publications');
+const publications = pubEntries
+  .map(p => ({
+    id: p.data.id || 0,
+    title: p.data.title,
+    year: p.data.year,
+    url: p.data.url,
+    raw: p.body?.trim() || p.data.title,
+  }))
+  .sort((a, b) => (b.id - a.id) || (b.year - a.year));
 ---
 
 <Layout title="Publications & Research" description="Complete peer-reviewed bibliography of Prof. Dr. Tahar Abbou including journal articles, book chapters, and books.">
@@ -31,7 +42,8 @@ import publications from '../data/publications.json';
     {publications.map((pub) => (
       <article class="academic-card pub-card-item" data-text={pub.raw.toLowerCase()}>
         <div class="pub-item-header">
-          <span class="badge badge-gold">Item #{pub.id}</span>
+          {pub.id > 0 && <span class="badge badge-gold">Item #{pub.id}</span>}
+          <span class="badge badge-navy">{pub.year}</span>
         </div>
         
         <p class="pub-text">{pub.raw}</p>
@@ -129,6 +141,8 @@ import publications from '../data/publications.json';
   }
 
   .pub-item-header {
+    display: flex;
+    gap: 0.5rem;
     margin-bottom: 0.5rem;
   }
 

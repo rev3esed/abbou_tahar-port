@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import links from '../data/links.json';
+import { getCollection } from 'astro:content';
+
+const linkEntries = await getCollection('links');
+const links = linkEntries.map(l => l.data);
 ---
 
 <Layout title="Useful Academic Links" description="Curated academic repositories, journal portals, and manuscript databases recommended by Prof. Dr. Tahar Abbou.">

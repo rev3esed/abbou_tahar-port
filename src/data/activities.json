@@ -1,84 +1,89 @@
-[
-  {
-    "category": "Research Projects & PRFU",
-    "items": [
-      {
-        "title": "Teaching English for Specific Purposes at the University of Adrar",
-        "role": "Member of Working Team (PRFU Project)",
-        "director": "Prof. Bachir Bouhania",
-        "period": "2022 - 2025",
-        "institution": "University of Adrar / DGRSDT",
-        "image": "/images/activity-1.png"
-      },
-      {
-        "title": "The Platform of Algerian Manuscripts in Africa (PAM)",
-        "role": "Member of Working Team (Three-Year National Project)",
-        "director": "Prof. A. Djaafri",
-        "period": "2018 - 2021",
-        "institution": "Laboratory of Algerian Manuscripts in West Africa",
-        "url": "https://pam.univ-adrar.dz/",
-        "image": "/images/activity-2.png"
-      },
-      {
-        "title": "Dictionary of Tuati Folk Terms and Expressions: Collect, Inventory and Study",
-        "role": "Member of Working Team (PRFU Project)",
-        "director": "Prof. A. Ksaci",
-        "period": "2019 - 2022",
-        "institution": "University of Adrar"
-      },
-      {
-        "title": "L’apprentissage de la Langue Anglaise au Sud algérien",
-        "role": "Member of Research Project",
-        "director": "Prof. B. Bouhania",
-        "institution": "General Directorate of Scientific Research and Technological Development (DGRSDT)"
-      }
-    ]
-  },
-  {
-    "category": "Editorial & Reviewer Responsibilities",
-    "items": [
-      {
-        "title": "Rufuf Journal (Laboratory of Algerian Manuscripts in West Africa)",
-        "role": "Associate Editor & Peer Reviewer",
-        "url": "https://www.asjp.cerist.dz/en/PresentationRevue/132"
-      },
-      {
-        "title": "El Maaref for Researches and Historical Studies",
-        "role": "Peer Reviewer",
-        "url": "https://www.asjp.cerist.dz/en/article/188146"
-      },
-      {
-        "title": "Al-Hakika Review (University of Adrar)",
-        "role": "Peer Reviewer",
-        "url": "https://www.asjp.cerist.dz/en/PresentationRevue/49"
-      },
-      {
-        "title": "Al-Ihyaa Journal",
-        "role": "Peer Reviewer",
-        "url": "https://www.asjp.cerist.dz/en/PresentationRevue/92"
-      }
-    ]
-  },
-  {
-    "category": "Scientific Governance & Academic Councils",
-    "items": [
-      {
-        "title": "Scientific Committee of the Department of English",
-        "role": "Active Member",
-        "period": "2012 - Present",
-        "institution": "Ahmed Draia University of Adrar"
-      },
-      {
-        "title": "Scientific Council of the Faculty of Arts and Literature",
-        "role": "Council Member",
-        "period": "2013-2018 & 2022-Present",
-        "institution": "Ahmed Draia University of Adrar"
-      },
-      {
-        "title": "Scientific Council of the National Centre of Manuscripts",
-        "role": "Council Member",
-        "period": "Adrar, Algeria"
-      }
-    ]
-  }
-]
+﻿{
+    "categories":  {
+                       "value":  [
+                                     {
+                                         "category":  "Research Projects \u0026 PRFU",
+                                         "items":  [
+                                                       {
+                                                           "title":  "Teaching English for Specific Purposes at the University of Adrar",
+                                                           "role":  "Member of Working Team (PRFU Project)",
+                                                           "director":  "Prof. Bachir Bouhania",
+                                                           "period":  "2022 - 2025",
+                                                           "institution":  "University of Adrar / DGRSDT",
+                                                           "image":  "/images/activity-1.png"
+                                                       },
+                                                       {
+                                                           "title":  "The Platform of Algerian Manuscripts in Africa (PAM)",
+                                                           "role":  "Member of Working Team (Three-Year National Project)",
+                                                           "director":  "Prof. A. Djaafri",
+                                                           "period":  "2018 - 2021",
+                                                           "institution":  "Laboratory of Algerian Manuscripts in West Africa",
+                                                           "url":  "https://pam.univ-adrar.dz/",
+                                                           "image":  "/images/activity-2.png"
+                                                       },
+                                                       {
+                                                           "title":  "Dictionary of Tuati Folk Terms and Expressions: Collect, Inventory and Study",
+                                                           "role":  "Member of Working Team (PRFU Project)",
+                                                           "director":  "Prof. A. Ksaci",
+                                                           "period":  "2019 - 2022",
+                                                           "institution":  "University of Adrar"
+                                                       },
+                                                       {
+                                                           "title":  "Lâ€™apprentissage de la Langue Anglaise au Sud algÃ©rien",
+                                                           "role":  "Member of Research Project",
+                                                           "director":  "Prof. B. Bouhania",
+                                                           "institution":  "General Directorate of Scientific Research and Technological Development (DGRSDT)"
+                                                       }
+                                                   ]
+                                     },
+                                     {
+                                         "category":  "Editorial \u0026 Reviewer Responsibilities",
+                                         "items":  [
+                                                       {
+                                                           "title":  "Rufuf Journal (Laboratory of Algerian Manuscripts in West Africa)",
+                                                           "role":  "Associate Editor \u0026 Peer Reviewer",
+                                                           "url":  "https://www.asjp.cerist.dz/en/PresentationRevue/132"
+                                                       },
+                                                       {
+                                                           "title":  "El Maaref for Researches and Historical Studies",
+                                                           "role":  "Peer Reviewer",
+                                                           "url":  "https://www.asjp.cerist.dz/en/article/188146"
+                                                       },
+                                                       {
+                                                           "title":  "Al-Hakika Review (University of Adrar)",
+                                                           "role":  "Peer Reviewer",
+                                                           "url":  "https://www.asjp.cerist.dz/en/PresentationRevue/49"
+                                                       },
+                                                       {
+                                                           "title":  "Al-Ihyaa Journal",
+                                                           "role":  "Peer Reviewer",
+                                                           "url":  "https://www.asjp.cerist.dz/en/PresentationRevue/92"
+                                                       }
+                                                   ]
+                                     },
+                                     {
+                                         "category":  "Scientific Governance \u0026 Academic Councils",
+                                         "items":  [
+                                                       {
+                                                           "title":  "Scientific Committee of the Department of English",
+                                                           "role":  "Active Member",
+                                                           "period":  "2012 - Present",
+                                                           "institution":  "Ahmed Draia University of Adrar"
+                                                       },
+                                                       {
+                                                           "title":  "Scientific Council of the Faculty of Arts and Literature",
+                                                           "role":  "Council Member",
+                                                           "period":  "2013-2018 \u0026 2022-Present",
+                                                           "institution":  "Ahmed Draia University of Adrar"
+                                                       },
+                                                       {
+                                                           "title":  "Scientific Council of the National Centre of Manuscripts",
+                                                           "role":  "Council Member",
+                                                           "period":  "Adrar, Algeria"
+                                                       }
+                                                   ]
+                                     }
+                                 ],
+                       "Count":  3
+                   }
+}

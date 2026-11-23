@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import activities from '../data/activities.json';
+import activitiesData from '../data/activities.json';
+
+const activities = (activitiesData as any).categories || activitiesData;
 ---
 
 <Layout title="Scientific Activities" description="Research projects, PRFU teams, PAM manuscript platform, and editorial boards of Prof. Dr. Tahar Abbou.">

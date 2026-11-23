@@ -1,6 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import courses from '../data/courses.json';
+import { getCollection } from 'astro:content';
+
+const courseEntries = await getCollection('courses');
+const courses = courseEntries.map(c => ({
+  code: c.data.code,
+  title: c.data.title,
+  level: c.data.level,
+  semester: c.data.semester,
+  period: c.data.period,
+  department: c.data.department,
+  description: c.data.description,
+  resources: c.data.resources || [],
+}));
 ---
 
 <Layout title="Courses Taught & Teaching" description="Courses, syllabi, mock tests, and exams taught by Prof. Dr. Tahar Abbou at the University of Adrar.">

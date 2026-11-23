@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import gallery from '../data/gallery.json';
+import { getCollection } from 'astro:content';
+
+const galleryEntries = await getCollection('gallery');
+const gallery = galleryEntries.map(g => g.data);
 ---
 
 <Layout title="Photo Gallery" description="Photographic documentation of international academic conferences, fieldwork, and symposiums of Prof. Dr. Tahar Abbou.">

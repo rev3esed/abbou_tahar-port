@@ -1,15 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import profile from '../data/profile.json';
-import publications from '../data/publications.json';
-import courses from '../data/courses.json';
+import { getCollection } from 'astro:content';
 
-// Top selected publications
-const featuredIds = [11, 13, 23, 24, 29];
-const featuredPubs = publications.filter(p => featuredIds.includes(p.id));
+const allPubs = await getCollection('publications');
+const featuredPubs = allPubs
+  .map(p => ({
+    id: p.data.id || 0,
+    raw: p.body?.trim() || p.data.title,
+    url: p.data.url,
+    year: p.data.year,
+  }))
+  .sort((a, b) => b.year - a.year || (b.id - a.id))
+  .slice(0, 5);
 
-// Primary course for quick access
-const primaryCourse = courses[0];
+const allCourses = await getCollection('courses');
+const primaryCourse = allCourses.find(c => c.data.code === 'GR1')?.data || allCourses[0]?.data || {
+  code: 'GR1',
+  level: 'Licence 1 (L1)',
+  semester: 'Semester 2 (S2)',
+  title: 'Grammar (GR1) - First Year Licence',
+  department: 'Department of English, University of Adrar',
+  period: '2003 - Present',
+  description: 'Comprehensive study of foundational English grammatical structures, syntax, and sentence mechanics for undergraduate students in English studies.',
+  resources: []
+};
 ---
 
 <Layout title="Home">
@@ -160,7 +175,7 @@ const primaryCourse = courses[0];
         <h2 class="section-heading">Selected Publications</h2>
       </div>
       <a href="/publications" class="view-all-btn">
-        View All 29 Publications
+        View All {allPubs.length} Publications
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -171,7 +186,7 @@ const primaryCourse = courses[0];
     <div class="publications-list">
       {featuredPubs.map((pub) => (
         <article class="academic-card pub-item">
-          <div class="pub-number">#{pub.id}</div>
+          {pub.id > 0 && <div class="pub-number">#{pub.id}</div>}
           <div class="pub-body">
             <p class="pub-citation-text">{pub.raw}</p>
             {pub.url && (
@@ -241,16 +256,18 @@ const primaryCourse = courses[0];
         <p class="course-dept">{primaryCourse.department} ({primaryCourse.period})</p>
         <p class="course-summary">{primaryCourse.description}</p>
         
-        <div class="resources-download-list">
-          <h4 class="resources-subtitle">Downloadable Exams & Handouts:</h4>
-          {primaryCourse.resources.map((res) => (
-            <a href={res.file} class="resource-download-pill" target="_blank" download>
-              <span class="res-icon">📥</span>
-              <span class="res-title">{res.title}</span>
-              <span class="res-fmt">{res.format}</span>
-            </a>
-          ))}
-        </div>
+        {primaryCourse.resources && primaryCourse.resources.length > 0 && (
+          <div class="resources-download-list">
+            <h4 class="resources-subtitle">Downloadable Exams & Handouts:</h4>
+            {primaryCourse.resources.map((res: any) => (
+              <a href={res.file} class="resource-download-pill" target="_blank" download>
+                <span class="res-icon">📥</span>
+                <span class="res-title">{res.title}</span>
+                <span class="res-fmt">{res.format}</span>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   </section>
