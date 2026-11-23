@@ -1,4 +1,4 @@
-﻿---
+---
 id: 17
 title: "Models from Amazigh Literature in Taznatit in the Region of Gurara"
 year: 2022

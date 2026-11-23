@@ -2,7 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import activitiesData from '../data/activities.json';
 
-const activities = (activitiesData as any).categories || activitiesData;
+const rawActivities = activitiesData as any;
+const categories: any[] = Array.isArray(rawActivities)
+  ? rawActivities
+  : Array.isArray(rawActivities.categories)
+    ? rawActivities.categories
+    : Array.isArray(rawActivities.categories?.value)
+      ? rawActivities.categories.value
+      : [];
 ---
 
 <Layout title="Scientific Activities" description="Research projects, PRFU teams, PAM manuscript platform, and editorial boards of Prof. Dr. Tahar Abbou.">
@@ -15,7 +22,7 @@ const activities = (activitiesData as any).categories || activitiesData;
   </div>
 
   <div class="activities-categories">
-    {activities.map((cat) => (
+    {categories.map((cat: any) => (
       <section class="activity-section">
         <h2 class="cat-title">{cat.category}</h2>
 
