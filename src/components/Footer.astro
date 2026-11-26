@@ -29,7 +29,21 @@ import profile from '../data/profile.json';
           </li>
           <li>
             <span class="icon">📱</span>
-            <span>WhatsApp: {profile.whatsapp.join(' / ')}</span>
+            <span>
+              WhatsApp:{' '}
+              {profile.whatsapp.map((num, i) => (
+                <>
+                  {i > 0 && ' / '}
+                  <a
+                    href={`https://wa.me/${num.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {num}
+                  </a>
+                </>
+              ))}
+            </span>
           </li>
           <li>
             <span class="icon">📍</span>

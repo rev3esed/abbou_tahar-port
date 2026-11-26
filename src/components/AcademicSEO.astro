@@ -1,4 +1,6 @@
 ---
+import profile from '../data/profile.json';
+
 export interface Props {
   title: string;
   description?: string;
@@ -17,10 +19,10 @@ export interface Props {
 
 const {
   title,
-  description = "الموقع الأكاديمي الرسمي للأستاذ الدكتور الطاهر عبو - أستاذ التعليم العالي في الحضارة الإفريقية بجامعة أحمد دراية، أدرار، الجزائر.",
-  lang = "ar",
+  description = "Official Academic Website of Prof. Dr. Tahar Abbou - Full Professor of African Civilization at Ahmed Draia University of Adrar, Algeria.",
+  lang = "en",
   canonicalUrl = Astro.url.href,
-  image = "/images/og-preview.jpg",
+  image = "/images/profile-portrait.jpg",
   type = "website",
   citationTitle,
   citationAuthor = "Tahar Abbou",
@@ -32,11 +34,24 @@ const {
 
 const siteUrl = Astro.site ? Astro.site.origin : "https://www.abboutahar.com";
 const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+const pageTitle = title === "Home"
+  ? "Prof. Dr. Tahar Abbou | Full Professor of African Civilization"
+  : `${title} | Prof. Dr. Tahar Abbou`;
+
+// Build valid sameAs links (excluding unconfigured placeholders)
+const profileLinks = (profile as any).links || {};
+const sameAs = Object.values(profileLinks).filter(
+  (url): url is string =>
+    typeof url === 'string' &&
+    url.startsWith('http') &&
+    !url.includes('user=example') &&
+    url !== 'https://orcid.org'
+);
 ---
 
 <!-- Primary Meta Tags -->
-<title>{title} | أ.د. طاهر عبو - Pr. Tahar Abbou</title>
-<meta name="title" content={`${title} | أ.د. طاهر عبو`} />
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
 <meta name="description" content={description} />
 <meta name="author" content="Prof. Dr. Tahar Abbou" />
 <link rel="canonical" href={canonicalUrl} />
@@ -44,16 +59,16 @@ const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={fullImageUrl} />
-<meta property="og:site_name" content="Prof. Tahar Abbou - Academic Website" />
+<meta property="og:site_name" content="Prof. Dr. Tahar Abbou - Academic Website" />
 <meta property="og:locale" content={lang === 'ar' ? 'ar_DZ' : lang === 'fr' ? 'fr_FR' : 'en_US'} />
 
 <!-- Twitter Meta Tags -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalUrl} />
-<meta property="twitter:title" content={title} />
+<meta property="twitter:title" content={pageTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={fullImageUrl} />
 
@@ -69,18 +84,15 @@ const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Tahar Abbou",
-  "alternateName": ["الطاهر عبو", "Pr. Tahar Abbou", "Dr. Tahar Abbou"],
-  "jobTitle": "Full Professor of African Civilization",
+  "name": profile.name || "Prof. Dr. Tahar Abbou",
+  "alternateName": [profile.name_ar || "الطاهر عبو", "Pr. Tahar Abbou", "Dr. Tahar Abbou"],
+  "jobTitle": profile.title || "Full Professor of African Civilization",
   "affiliation": {
     "@type": "EducationalOrganization",
     "name": "Ahmed Draia University of Adrar, Algeria",
     "url": "https://www.univ-adrar.edu.dz"
   },
-  "url": "https://www.abboutahar.com",
-  "sameAs": [
-    "https://orcid.org",
-    "https://scholar.google.com",
-    "https://www.researchgate.net"
-  ]
+  "url": siteUrl,
+  "image": fullImageUrl,
+  ...(sameAs.length > 0 ? { "sameAs": sameAs } : {})
 })} />

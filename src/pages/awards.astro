@@ -24,14 +24,56 @@ import awards from '../data/awards.json';
         <p class="award-desc">{award.description}</p>
 
         {award.image && (
-          <div class="award-certificate-frame">
+          <button
+            type="button"
+            class="award-certificate-frame cert-zoom-btn"
+            data-cert-src={award.image}
+            data-cert-title={award.title}
+            aria-label={`View full certificate: ${award.title}`}
+          >
             <img src={award.image} alt={award.title} class="award-certificate-img" />
-          </div>
+            <span class="cert-zoom-hint">🔍 Click to enlarge certificate</span>
+          </button>
         )}
       </article>
     ))}
   </div>
+
+  <div class="cert-lightbox" id="certLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button type="button" class="cert-lb-close" id="certLbClose" aria-label="Close certificate view">×</button>
+    <img id="certLbImg" src="" alt="" />
+  </div>
 </Layout>
+
+<script is:inline>
+  (function () {
+    var modal = document.getElementById('certLightbox');
+    var img = document.getElementById('certLbImg');
+    var closeBtn = document.getElementById('certLbClose');
+    var btns = document.querySelectorAll('.cert-zoom-btn');
+    if (!modal || !img || !btns.length) return;
+
+    function close() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        img.src = b.getAttribute('data-cert-src') || '';
+        img.alt = b.getAttribute('data-cert-title') || '';
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
+  })();
+</script>
 
 <style>
   .awards-grid {
@@ -72,11 +114,68 @@ import awards from '../data/awards.json';
     overflow: hidden;
     border: 1px solid var(--color-border);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    background: #ffffff;
+    cursor: zoom-in;
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .cert-zoom-hint {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    background: rgba(10, 25, 47, 0.85);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
   }
 
   .award-certificate-img {
     width: 100%;
     display: block;
     height: auto;
+  }
+
+  .cert-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 25, 47, 0.94);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .cert-lightbox.is-open {
+    display: flex;
+  }
+
+  .cert-lightbox img {
+    max-width: 95%;
+    max-height: 90vh;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+
+  .cert-lb-close {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 1.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
